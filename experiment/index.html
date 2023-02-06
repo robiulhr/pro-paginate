@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Paginate examples</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: blueviolet;
+      }
+      #paginate {
+        height: 400px;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      let currentMonth = new Date().getMonth();
+      document.onreadystatechange = function () {
+        if (document.readyState === "complete") {
+          const example_1 = new ProPaginate({mainContainerSelector:"#paginate"});
+          // console.log(example_1);
+        }
+      };
+    </script>
+    <h1>Paginate examples</h1>
+    <h2>Default configuration</h2>
+      <div id="paginate" >
+        <!-- <div class="paginate_wrapper">
+          <div class="items_container column_view" >
+            <div class="data_item">
+              <h2 class="dat_item_title">Title here.</h2>
+              <div class="data_item_details">
+                <span class="data_item_date">date</span
+                ><span class="data_item_location">location</span>
+              </div>
+            </div>
+            <div class="data_item">
+              <h2 class="dat_item_title">Title here.</h2>
+              <div class="data_item_details">
+                <span class="data_item_date">date</span
+                ><span class="data_item_location">location</span>
+              </div>
+            </div>
+            <div class="data_item">
+              <h2 class="dat_item_title">Title here.</h2>
+              <div class="data_item_details">
+                <span class="data_item_date">date</span
+                ><span class="data_item_location">location</span>
+              </div>
+            </div>
+            <div class="data_item">
+              <h2 class="dat_item_title">Title here.</h2>
+              <div class="data_item_details">
+                <span class="data_item_date">date</span
+                ><span class="data_item_location">location</span>
+              </div>
+            </div>
+            <div class="data_item">
+              <h2 class="dat_item_title">Title here.</h2>
+              <div class="data_item_details">
+                <span class="data_item_date">date</span
+                ><span class="data_item_location">location</span>
+              </div>
+            </div>
+            <div class="data_item">
+              <h2 class="dat_item_title">Title here.</h2>
+              <div class="data_item_details">
+                <span class="data_item_date">date</span
+                ><span class="data_item_location">location</span>
+              </div>
+            </div>
+            <div class="data_item">
+              <h2 class="dat_item_title">Title here.</h2>
+              <div class="data_item_details">
+                <span class="data_item_date">date</span
+                ><span class="data_item_location">location</span>
+              </div>
+            </div>
+          </div>
+          <div class="show_more_btn">
+            <span>Show More</span>
+          </div>
+        </div>
+        <div id="pagination_container">
+            <ul class="pagination_wrapper">
+                <li class="paginaiton_first"><<</li>
+                <li class="paginaiton_prev"><</li>
+                <li class="ellipse paginaiton_less">...</li>
+                <li class="pagination-item">1</li>
+                <li class="pagination-item">2</li>
+                <li class="pagination-item">3</li>
+                <li class="pagination-item">4</li>
+                <li class="pagination-item">5</li>
+                <li class="pagination-item">6</li>
+                <li class="pagination-item">7</li>
+                <li class="pagination-item">8</li>
+                <li class="pagination-item">9</li>
+                <li class="pagination-item">10</li>
+                <li class="pagination-item">11</li>
+                <li class="ellipse paginaiton_more">...</li>
+                <li class="paginaiton_next">></li>
+                <li class="paginaiton_last">>></li>
+            </ul>
+        </div> -->
+      </div>
+    <script src="main.js"></script>
+  </body>
+</html>

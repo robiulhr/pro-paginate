@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Paginate examples</title>
+
+    <script type="text/javascript">
+        /**
+         * readyStateChange event To detect the state change.
+         */
+        document.onreadystatechange = function () {
+
+            /**
+             * The readyState property of the document objects denotes the current state of the document (document.readyState tells us the status of the page load). There are 3 different possible states:
+             * loading — The document is loading.(In this state, the document is constructing its elements.)
+             * interactive — In this state, the DOM is loaded and accessible. However, resources like images, stylesheets, and JavaScript files will not have finished downloading/loading/parsing.
+             *               If the readyState is interactive, then the DOM is loaded, but resources like script, img, and css files will still be downloading. The DOMContentLoaded event is also fired when the readyState changes from loading to interactive. Once the state is interactive, we can access the DOM elements.
+             * complete — The document and all resources (like images/stylesheets have finished loading).
+             *               When readyState is changed to complete, it means that the document is now parsed and loaded, and all known additional resources like CSS, images, and JS have also been parsed and loaded.
+             */
+            if (document.readyState === "complete") {
+                var example_1 = new Paginate({
+                    containerSelector: '.example_1 .items',
+                    itemSelector: '.example_1 .items > div',
+                    navigationSelector: '.example_1 .page_navigation',
+                    itemsPerPage: 3,
+                    hideOnSmall: true,
+                    onPageDisplayed: function (ind) {
+                        console.log(ind, "example 1 did trigered the onPageDisplayed")
+                    },
+                });
+                console.log(example_1)
+                var example_2 = new Paginate({
+                    containerSelector: '.example_2 .items',
+                    itemSelector: '.example_2 .items > div',
+                    navigationSelector: '.example_2 .page_navigation',
+                    wrapAround: true,
+                    showFirstLast: true,
+                    hideOnSmall: true,
+                    itemsPerPage: 2,
+                });
+                console.log(example_2)
+
+                var example_3 = new Paginate({
+                    containerSelector: '.example_3 .items',
+                    itemSelector: '.example_3 .items > div',
+                    navigationSelector: '.example_3 .page_navigation',
+                    wrapAround: true,
+                    pageLinksToDisplay: 1,
+                    hideOnSmall: true,
+                    itemsPerPage: 1,
+                    startPage: 0,
+                    onPageDisplayed: function (ele) {
+                        console.log(ele, "example 3 did trigered the onPageDisplayed")
+
+                    },
+                });
+                console.log(example_3)
+                // var example = new Paginate({
+                //     hideOnSmall:true,
+                //     itemsPerPage: 1,
+                // });
+            }
+        };
+    </script>
+
+</head>
+
+<body>
+    <h1>Paginate examples</h1>
+    <h2>Default configuration</h2>
+    <div class="example_1">
+        <div class="items">
+            <div class="item item1">
+                <div class="title">Slide 1</div>
+            </div>
+            <div class="item item2">
+                <div class="title">Slide 2</div>
+            </div>
+            <div class="item item3">
+                <div class="title">Slide 3</div>
+            </div>
+            <div class="item item4">
+                <div class="title">Slide 4</div>
+            </div>
+            <div class="item item5">
+                <div class="title">Slide 5</div>
+            </div>
+            <div class="item item6">
+                <div class="title">Slide 6</div>
+            </div>
+        </div>
+        <div class="page_navigation"></div>
+    </div>
+    <h2>Wrap around, multiple control panels, CSS transition</h2>
+    <div class="example_2">
+        <div class="page_navigation"></div>
+        <div class="items">
+            <div class="item item1">
+                <div class="title">Slide 1</div>
+            </div>
+            <div class="item item2">
+                <div class="title">Slide 2</div>
+            </div>
+            <div class="item item3">
+                <div class="title">Slide 3</div>
+            </div>
+            <div class="item item4">
+                <div class="title">Slide 4</div>
+            </div>
+            <div class="item item5">
+                <div class="title">Slide 5</div>
+            </div>
+            <div class="item item6">
+                <div class="title">Slide 6</div>
+            </div>
+        </div>
+        <div class="page_navigation"></div>
+    </div>
+    <h2>Wrap around, limited page links</h2>
+    <div class="example_3">
+        <div class="items">
+            <div class="item item1">
+                <div class="title">Slide 1</div>
+            </div>
+            <div class="item item2">
+                <div class="title">Slide 2</div>
+            </div>
+            <div class="item item3">
+                <div class="title">Slide 3</div>
+            </div>
+            <div class="item item4">
+                <div class="title">Slide 4</div>
+            </div>
+            <div class="item item5">
+                <div class="title">Slide 5</div>
+            </div>
+            <div class="item item6">
+                <div class="title">Slide 6</div>
+            </div>
+        </div>
+        <div class="page_navigation"></div>
+    </div>
+    <div class="items">
+        <div class="item"> Your Content </div>
+        <div class="item"> Your Content </div>
+        <div class="item"> Your Content </div>
+        <div class="item"> Your Content </div>
+        <div class="item"> Your Content </div>
+        <div class="item"> Your Content </div>
+        <div class="item"> Your Content </div>
+    </div>
+    <div class="page_navigation"></div>
+    <!-- <script src="js/purePajinate.es5.min.js"></script> -->
+    <script src="../paginate.js"></script>
+
+
+    <!-- <script src="../paginate.final.js"></script> -->
+</body>
+
+</html>
