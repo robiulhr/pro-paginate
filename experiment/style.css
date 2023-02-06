@@ -7,6 +7,7 @@
   --background-color-5: #45380fa8;
   --text-color-1: #f8f8f8a8;
   --text-color-2: #383535a8;
+  --box-shadow-1: rgb(50 50 93 / 25%) 67px 171px 60px 117px inset, rgb(0 0 0 / 30%) 6px 19px 36px -18px inset
 }
 
 a {
@@ -28,11 +29,11 @@ a {
 }
 
 .items_container {
-  width: 96%;
   justify-content: center;
   overflow: scroll;
   scroll-behavior: smooth;
   cursor: grab;
+  box-shadow: var(--box-shadow-1);
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;
@@ -45,11 +46,14 @@ a {
 }
 
 .items_container.row_view {
+  width: 96%;
   height: 200px;
   flex-direction: row;
 }
 
 .items_container.column_view {
+  width: max-content;
+  padding: 10px 30px;
   height: 400px;
   flex-direction: column;
 }
