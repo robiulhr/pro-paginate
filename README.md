@@ -2,6 +2,7 @@
 
 A open source pagination plugin using pure Javascript.
 
+[paginate Example with default settings](./img/Paginate-example.png)
 
 # Installation
 
@@ -109,6 +110,9 @@ document.onreadystatechange = function () {
 | `onInit`          | Function | false   | Callback to be run on initialization.        |
 | `onPageDisplayed` | Function | false   | Callback to be run once a page is displayed. |
 
+## Browser Support
+
+When using the Ecmascript 5 version, supports goes all the way back to Internet Explorer 10. I have used [Babel](https://babeljs.io/) to convert the code into Ecmascript 5 compatible code.
 
 ## License
 
