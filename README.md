@@ -3,8 +3,6 @@
 A open source pagination plugin using pure Javascript.
 
 
-<br><br>
-
 # Installation
 
 To start using it straight away, place this in the head of your HTML code:
@@ -15,8 +13,6 @@ To start using it straight away, place this in the head of your HTML code:
 ```
 
 
-<br><br>
-
 # Usage Guide
 
 
@@ -24,11 +20,9 @@ To start using it straight away, place this in the head of your HTML code:
 
 ProPaginate class is to make the most modern pagination. This allows to make pagination for monthly data.
 
-<br>
 
 ### `ProPaginate` Class Usage Example
 
-<br>
 
 Here is the default creation of `ProPaginate`:
 
@@ -57,19 +51,15 @@ document.onreadystatechange = function () {
 };
 ```
 
-<br>
 
 ### Creation
-<br>
 
 | Factory                                   | Description                                                                                    |
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `new ProPaginate`(<Map options> options?) | Instantiates a ProPaginate object optionally given an object literal with ProPaginate options. |
 
-<br>
 
 ### Options
-<br>
 
 | Option                  | Type    | Default                                                                                                                                                               | Description                                                                                                                                 |
 | ----------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -82,11 +72,9 @@ document.onreadystatechange = function () {
 | `showMoreAreaLabel`     | String  | `'Show More'`                                                                                                                                                         | Area label for show more items button.                                                                                                      |
 | `showMoreClass`         | String  | `'show_more'`                                                                                                                                                                  | custom class for show more items button.                                                                                                    |
 
-<br>
 
 
 ### Options inherited from `Paginate` class
-<br>
 
 | Option                     | Type    | Default                                    | Description                                                                                              |
 | -------------------------- | ------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
@@ -113,20 +101,15 @@ document.onreadystatechange = function () {
 |  `pageLinkAreaLabel`       |  Array  | `["jan", "feb", "mar", "apr","may","jun","jul","aug","sep","oct","nov","dec"]` | Array of text to show as arealabel of page links.
 
 
-<br>
 
 ### Methods inherited from `Paginate` class
-<br>
 
 | Method            | Type     | Default | Description                                  |
 | ----------------- | -------- | ------- | -------------------------------------------- |
 | `onInit`          | Function | false   | Callback to be run on initialization.        |
 | `onPageDisplayed` | Function | false   | Callback to be run once a page is displayed. |
 
-<br>
-<br>
 
 ## License
-<br>
 
 MIT License See [LICENSE.txt](https://github.com/robiulhr/paginate/blob/main/LICENSE)
