@@ -1,4 +1,5 @@
-const data = [
+
+export const data = [
     {
       month: "january",
       data: [

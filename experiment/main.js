@@ -20,13 +20,13 @@ class Paginate {
       paginationSelector: '.pagination',
       startpageNum: 0,
       visiblePageCount: 4,
-      onLinkClick: function () {},
-      onFirstClick: function () {},
-      onLastClick: function () {},
-      onPrevClick: function () {},
-      onNextClick: function () {},
-      onMoreClick: function () {},
-      onLessClick: function () {}
+      onLinkClick: function (event) {},
+      onFirstClick: function (event) {},
+      onLastClick: function (event) {},
+      onPrevClick: function (event) {},
+      onNextClick: function (event) {},
+      onMoreClick: function (event) {},
+      onLessClick: function (event) {}
     }
     this._currentPage = this.defaults.startpageNum
   }
@@ -68,7 +68,7 @@ class Paginate {
     }
     return true
   }
-  _selectElement (selector) {
+  _selectArrayofElement (selector) {
     if (this._isValidElementSelector(selector))
       if (document.querySelectorAll(selector).length != 0)
         return document.querySelectorAll(selector)
@@ -81,7 +81,19 @@ class Paginate {
         `'${selector}' is not a valid css selector Please provide a valid one.`
       )
   }
-
+  _selectSingleElement (selector) {
+    if (this._isValidElementSelector(selector))
+      if (document.querySelector(selector))
+        return document.querySelector(selector)
+      else
+        throw Error(
+          `Your site doesn't contain any '${selector}' selector. Please provide a valid selector.`
+        )
+    else
+      throw Error(
+        `'${selector}' is not a valid css selector Please provide a valid one.`
+      )
+  }
   _checkElementOverflows (element) {
     if (element.classList.contains('row_view')) {
       if (element.offsetWidth < element.scrollWidth) return true
@@ -91,21 +103,32 @@ class Paginate {
       return false
     }
   }
+  _pageItemsHorizontalScrollEventCallback (e) {
+    e.target.parentElement.scrollLeft += e.deltaY * 3
+  }
   _pageItemsHorizontalScroll (container) {
     if (container.classList.contains('row_view')) {
+      const that = this
       container.addEventListener(
         'wheel',
-        function (e) {
-          container.scrollLeft += e.deltaY * 3
-        },
+        that._pageItemsHorizontalScrollEventCallback,
         { passive: true }
+      )
+    }
+  }
+  _removePageItemsHorizontalScroll (container) {
+    if (container.classList.contains('row_view')) {
+      const that = this
+      container.removeEventListener(
+        'wheel',
+        that._pageItemsHorizontalScrollEventCallback
       )
     }
   }
   _pageItemsTouchScroll (container) {
     // should fire when the page overflows. that means gets bigger that the parent.
     let startPossition = { startClintX: 0, startClintY: 0 }
-    const mouseDownHandler = function (e) {
+    this._mouseDownHandler = function (e) {
       e.preventDefault()
       startPossition = {
         startClintX: e.clientX,
@@ -137,52 +160,47 @@ class Paginate {
       container.style.cursor = 'grab'
       container.style.removeProperty('user-select')
     }
-    container.addEventListener('mousedown', mouseDownHandler)
+    container.addEventListener('mousedown', this._mouseDownHandler)
   }
-  _createPagination (pageCount) {
+  _removePageItemsTouchScrollEvent (container) {
+    container.removeEventListener('mousedown', this._mouseDownHandler)
+  }
+  _handlePageScrollandTouchScrollDependingOverflows (container) {
+    if (this._checkElementOverflows(container)) {
+      container.style.justifyContent = 'flex-start'
+      this._pageItemsHorizontalScroll(container)
+      this._pageItemsTouchScroll(container)
+    } else {
+      container.style.justifyContent = 'center'
+      this._removePageItemsHorizontalScroll(container)
+      this._removePageItemsTouchScrollEvent(container)
+    }
+  }
+  _createPagination () {
+    let paginateWrapper = '<div class="paginate_wrapper">'
+    paginateWrapper += `<div class="items_container ${this.defaults.itemsView}"> </div>`
     // createPagination section
+
     const more = this.defaults.hasEllips
-      ? '<li class="pagination_item ellipse more"><span>...</span></li>'
+      ? `<li class="pagination_item ellipse more"><span>...</span></li>`
       : ''
     const less = this.defaults.hasEllips
-      ? '<li class="pagination_item ellipse less"><span>...</span></li>'
+      ? `<li class="pagination_item ellipse less"><span>...</span></li>`
       : ''
     const first = !this.defaults.showFirstLast
       ? ''
-      : '<li class="pagination_item paginaiton_first' +
-        this.defaults.defaultClass +
-        '"><a href="" aria-label="' +
-        this.defaults.firstAreaLabel +
-        '" onclick="return false;">' +
-        this.defaults.firstAreaLabel +
-        '</a></li>'
+      : `<li class="pagination_item paginaiton_first ${this.defaults.defaultClass}"><a href="" aria-label="${this.defaults.firstAreaLabel}" onclick="return false;">${this.defaults.firstAreaLabel}</a></li>`
+
     const last = !this.defaults.showFirstLast
       ? ''
-      : '<li class="pagination_item paginaiton_last' +
-        this.defaults.defaultClass +
-        '"><a href="" aria-label="' +
-        this.defaults.lastAreaLabel +
-        '" onclick="return false;">' +
-        this.defaults.lastAreaLabel +
-        '</a></li>'
+      : `<li class="pagination_item paginaiton_last ${this.defaults.defaultClass}"><a href="" aria-label="${this.defaults.lastAreaLabel}" onclick="return false;">${this.defaults.lastAreaLabel}</a></li>`
     const previous = !this.defaults.showPrevNext
       ? ''
-      : '<li class="pagination_item paginaiton_prev' +
-        this.defaults.defaultClass +
-        '"><a href="" aria-label="' +
-        this.defaults.prevAreaLabel +
-        '" onclick="return false;">' +
-        this.defaults.prevAreaLabel +
-        '</a></li>'
+      : `<li class="pagination_item paginaiton_prev ${this.defaults.defaultClass}"><a href="" aria-label="${this.defaults.prevAreaLabel}" onclick="return false;">${this.defaults.prevAreaLabel}</a></li>`
     const next = !this.defaults.showPrevNext
       ? ''
-      : '<li class="pagination_item paginaiton_next' +
-        this.defaults.defaultClass +
-        '"><a href="" aria-label="' +
-        this.defaults.nextAreaLabel +
-        '" onclick="return false;">' +
-        this.defaults.nextAreaLabel +
-        '</a></li>'
+      : `<li class="pagination_item paginaiton_next ${this.defaults.defaultClass}"><a href="" aria-label="${this.defaults.nextAreaLabel}" onclick="return false;">${this.defaults.nextAreaLabel}</a></li>`
+
     let paginationContainer = ` <div id="pagination_container"><ul class="pagination_wrapper">`
 
     this.defaults.paginationOrder.forEach(function (element) {
@@ -202,17 +220,17 @@ class Paginate {
         case 'num':
           this.defaults.hasEllips ? (paginationContainer += less) : ''
           let count = 0
-          while (count <= pageCount - 1) {
+          while (count <= this.pageCount - 1) {
             let currentLink = ''
             switch (count) {
               case 0:
                 currentLink = 'first_num_link'
                 break
-              case pageCount - 1:
+              case this.pageCount - 1:
                 currentLink = 'last_num_link'
                 break
             }
-            paginationContainer += `<li class="pagination-item ${
+            paginationContainer += `<li class="pagination_item ${
               this.defaults.defaultClass
             } data-item ${currentLink}" aria-label="${count}"><a href="#" onclick="return false">${
               Array.isArray(this.defaults.pageLinkAreaLabel)
@@ -225,18 +243,77 @@ class Paginate {
           break
       }
     }, this)
-    return (paginationContainer += `</ul></div>`)
+    return paginateWrapper + (paginationContainer + `</ul></div>`) + '</div>'
   }
 
   _hideAllShowSpecificPaginationItems (allEle) {
     allEle.forEach(function (item, ind) {
       if (
         ind < this.defaults.startpageNum ||
-        ind > this.defaults.startpageNum + this.defaults.visiblePageCount - 1
+        ind > this.defaults.startpageNum + (this.defaults.visiblePageCount - 1)
       )
         item.style.display = 'none'
       else item.style.display = 'list-item'
     }, this)
+  }
+  _makePaginationBtnDisable () {
+    // handle less ellipse
+    if (this._currentPage <= this.defaults.visiblePageCount - 1) {
+      this._selectSingleElement(
+        '.paginate_wrapper .pagination_item.ellipse.less'
+      ).style.display = 'none'
+    } else {
+      this._selectSingleElement(
+        '.paginate_wrapper .pagination_item.ellipse.less'
+      ).style.display = 'list-item'
+    }
+    // handle less ellipse
+    if (
+      this._currentPage >=
+      this.pageCount - 1 - this.defaults.visiblePageCount
+    ) {
+      this._selectSingleElement(
+        '.paginate_wrapper .pagination_item.ellipse.more'
+      ).style.display = 'none'
+    } else {
+      this._selectSingleElement(
+        '.paginate_wrapper .pagination_item.ellipse.more'
+      ).style.display = 'list-item'
+    }
+    if (!this.defaults.wrapAround) {
+      // handle prev and first button
+      if (this._currentPage <= 0) {
+        this._selectSingleElement(
+          '.paginate_wrapper .pagination_item.paginaiton_prev'
+        ).style.display = 'none'
+        this._selectSingleElement(
+          '.paginate_wrapper .pagination_item.paginaiton_first'
+        ).style.display = 'none'
+      } else {
+        this._selectSingleElement(
+          '.paginate_wrapper .pagination_item.paginaiton_prev'
+        ).style.display = 'list-item'
+        this._selectSingleElement(
+          '.paginate_wrapper .pagination_item.paginaiton_first'
+        ).style.display = 'list-item'
+      }
+      // handle next and last button
+      if (this._currentPage >= this.pageCount - 1) {
+        this._selectSingleElement(
+          '.paginate_wrapper .pagination_item.paginaiton_next'
+        ).style.display = 'none'
+        this._selectSingleElement(
+          '.paginate_wrapper .pagination_item.paginaiton_last'
+        ).style.display = 'none'
+      } else {
+        this._selectSingleElement(
+          '.paginate_wrapper .pagination_item.paginaiton_next'
+        ).style.display = 'list-item'
+        this._selectSingleElement(
+          '.paginate_wrapper .pagination_item.paginaiton_last'
+        ).style.display = 'list-item'
+      }
+    }
   }
 
   _setActiveLink (allEle) {
@@ -245,292 +322,461 @@ class Paginate {
       else elem.classList.remove('active')
     }, this)
   }
+
+  _firstClickHandler (allItems, container) {
+    const firstLink = this._selectSingleElement(
+      '.pagination_wrapper .pagination_item.paginaiton_first'
+    )
+    const that = this
+    firstLink.addEventListener('click', function (event) {
+      // call the custom first function
+      that.defaults.onFirstClick.call(that, event)
+      that._currentPage = 0
+      if (that.defaults.startpageNum != 0) {
+        that.defaults.startpageNum = 0
+        that._hideAllShowSpecificPaginationItems(allItems)
+      }
+      that._createRenderPageItems(container, that._currentPage)
+      that._setActiveLink(allItems)
+      that._makePaginationBtnDisable()
+    })
+  }
+  _prevClickHandler (allItems, container) {
+    const prevLink = this._selectSingleElement(
+      '.pagination_wrapper .pagination_item.paginaiton_prev'
+    )
+    const that = this
+    prevLink.addEventListener('click', function (event) {
+      // call the prev custom function
+      that.defaults.onPrevClick.call(that, event)
+      if (that._currentPage < that.pageCount && that._currentPage >= 1) {
+        that._currentPage--
+        if (that._currentPage < that.defaults.startpageNum) {
+          that.defaults.startpageNum--
+          that._hideAllShowSpecificPaginationItems(allItems)
+        }
+        that._createRenderPageItems(container, that._currentPage)
+        that._setActiveLink(allItems)
+        that._makePaginationBtnDisable()
+      } else if (that._currentPage <= 0) {
+        if (that.defaults.wrapAround) {
+          that.defaults.startpageNum =
+            that.pageCount - that.defaults.visiblePageCount
+          that._hideAllShowSpecificPaginationItems(allItems)
+          that._currentPage = that.pageCount - 1
+          that._createRenderPageItems(container, that._currentPage)
+          that._setActiveLink(allItems)
+          that._makePaginationBtnDisable()
+        }
+      }
+    })
+  }
+  _ellipseMoreClickHandler (allItems, container) {
+    const ellipseMore = this._selectSingleElement(
+      '.pagination_wrapper .pagination_item.ellipse.more'
+    )
+    const that = this
+    ellipseMore.addEventListener('click', function (event) {
+      // call the custom more function
+      that.defaults.onMoreClick.call(that, event)
+      if (
+        that.defaults.startpageNum + that.defaults.visiblePageCount >
+        that.pageCount - 1 - that.defaults.visiblePageCount
+      ) {
+        that.defaults.startpageNum +=
+          ((that.pageCount - 1) % that.defaults.visiblePageCount) - 1
+      } else {
+        that.defaults.startpageNum += that.defaults.visiblePageCount
+      }
+      if (
+        that._currentPage + that.defaults.visiblePageCount >
+        that.pageCount - 1
+      ) {
+        that._currentPage +=
+          ((that.pageCount - 1) % that.defaults.visiblePageCount) - 1
+      } else {
+        that._currentPage += that.defaults.visiblePageCount
+      }
+
+      that._hideAllShowSpecificPaginationItems(allItems)
+      that._createRenderPageItems(container, that._currentPage)
+      that._setActiveLink(allItems)
+      that._makePaginationBtnDisable()
+    })
+  }
+  _ellipseLessClickHandler (allItems, container) {
+    const ellipseLess = this._selectSingleElement(
+      '.pagination_wrapper .pagination_item.ellipse.less'
+    )
+    const that = this
+    ellipseLess.addEventListener('click', function (event) {
+      // call the custom less function
+      that.defaults.onLessClick.call(that, event)
+
+      if (that.defaults.startpageNum < that.defaults.visiblePageCount) {
+        that.defaults.startpageNum -=
+          that.defaults.startpageNum % that.defaults.visiblePageCount
+      } else {
+        that.defaults.startpageNum -= that.defaults.visiblePageCount
+      }
+      if (that._currentPage < that.defaults.visiblePageCount) {
+        that._currentPage -=
+          (that._currentPage % that.defaults.visiblePageCount) - 1
+      } else {
+        that._currentPage -= that.defaults.visiblePageCount
+      }
+
+      that._hideAllShowSpecificPaginationItems(allItems)
+      that._createRenderPageItems(container, that._currentPage)
+      that._setActiveLink(allItems)
+      that._makePaginationBtnDisable()
+    })
+  }
+  _numElemClickHandler (allItems, container) {
+    allItems.forEach((linkElement, linkEleInd) => {
+      const that = this
+      linkElement.addEventListener('click', function (event) {
+        // call the custom function
+        that.defaults.onLinkClick.call(that, event)
+
+        that._currentPage = linkEleInd
+        that._createRenderPageItems(container, that._currentPage)
+        that._setActiveLink(allItems)
+        that._makePaginationBtnDisable()
+      })
+    }, this)
+  }
+  _nextClickHander (allItems, container) {
+    const nextLink = this._selectSingleElement(
+      '.pagination_wrapper .pagination_item.paginaiton_next'
+    )
+    const that = this
+    nextLink.addEventListener('click', function (event) {
+      // call the custom next function
+      that.defaults.onNextClick.call(that, event)
+      if (that._currentPage < that.pageCount - 1 && that._currentPage >= 0) {
+        that._currentPage++
+        if (
+          that._currentPage >=
+          that.defaults.startpageNum + that.defaults.visiblePageCount
+        ) {
+          that.defaults.startpageNum++
+          that._hideAllShowSpecificPaginationItems(allItems)
+        }
+        that._createRenderPageItems(container, that._currentPage)
+        that._setActiveLink(allItems)
+        that._makePaginationBtnDisable()
+      } else if (that._currentPage >= that.pageCount - 1) {
+        if (that.defaults.wrapAround) {
+          that.defaults.startpageNum = 0
+          that._hideAllShowSpecificPaginationItems(allItems)
+          that._currentPage = 0
+          that._createRenderPageItems(container, that._currentPage)
+          that._setActiveLink(allItems)
+          that._makePaginationBtnDisable()
+        }
+      }
+    })
+  }
+  _lastClickHandler (allItems, container) {
+    const lastLink = this._selectSingleElement(
+      '.pagination_wrapper .pagination_item.paginaiton_last'
+    )
+    const that = this
+    lastLink.addEventListener('click', function (event) {
+      // call the custom last function
+      that.defaults.onLastClick.call(that, event)
+      that._currentPage = that.pageCount - 1
+      if (
+        that.defaults.startpageNum !=
+        that.pageCount - that.defaults.visiblePageCount
+      ) {
+        that.defaults.startpageNum =
+          that.pageCount - that.defaults.visiblePageCount
+        that._hideAllShowSpecificPaginationItems(allItems)
+      }
+      that._createRenderPageItems(container, that._currentPage)
+      that._setActiveLink(allItems)
+      that._makePaginationBtnDisable()
+    })
+  }
 }
 
-// console.log(new Paginate());
-// class PaginateClassic extends Paginate {
-// next button and previous button only.
-// }
-
-// class PaginateMinimal extends Paginate {
-
-// }
-
 class ProPaginate extends Paginate {
-  #dummyData = [
-    {
-      month: 'jan',
-      data: [
-        {
-          _date: 'Jan 20',
-          location: 'Chattagram'
-        }
-      ]
-    },
-    {
-      month: 'feb',
-      data: [
-        {
-          _date: 'feb 20',
-          location: 'Chattagram'
-        }
-      ]
-    },
-    {
-      month: 'march',
-      data: [
-        {
-          _date: 'march 12',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'apr',
-      data: [
-        {
-          _date: 'apr 12',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'apr 32',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'may',
-      data: [
-        {
-          _date: 'may 5',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'may 25',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'jun',
-      data: [
-        {
-          _date: 'jun 4',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'jun 24',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'jul',
-      data: [
-        {
-          _date: 'jul 5',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'jul 3',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'jul 25',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'aug',
-      data: [
-        {
-          _date: 'aug 4',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'aug 3',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'aug 11',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'aug 13',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'sep',
-      data: [
-        {
-          _date: 'sep 3',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'sep 2',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'sep 6',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'sep 6',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'sep 5',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'oct',
-      data: [
-        {
-          _date: 'oct 3',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'oct 23',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'oct 13',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'oct 23',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'oct 3',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'oct 13',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'nov',
-      data: [
-        {
-          _date: 'nov 2',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'nov 2',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'nov 22',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'nov 2',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'nov 22',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'nov 22',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'nov 2',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'nov 22',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'nov 2',
-          location: 'Dhaka'
-        }
-      ]
-    },
-    {
-      month: 'dec',
-      data: [
-        {
-          _date: 'dec 5',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 15',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 16',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 5',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 15',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 16',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 5',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 15',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 5',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 16',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 15',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 16',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 16',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 15',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 5',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 15',
-          location: 'Dhaka'
-        },
-        {
-          _date: 'dec 5',
-          location: 'Dhaka'
-        }
-      ]
-    }
-  ]
+	#dummyData = [
+		{
+		  month: 'jan',
+		  data: [
+			{
+			  _date: 'Jan 20',
+			  location: 'Chattagram'
+			}
+		  ]
+		},
+		{
+		  month: 'feb',
+		  data: [
+			{
+			  _date: 'feb 20',
+			  location: 'Chattagram'
+			}
+		  ]
+		},
+		{
+		  month: 'march',
+		  data: [
+			{
+			  _date: 'march 12',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'apr',
+		  data: [
+			{
+			  _date: 'apr 12',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'apr 32',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'may',
+		  data: [
+			{
+			  _date: 'may 5',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'may 25',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'jun',
+		  data: [
+			{
+			  _date: 'jun 4',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'jun 24',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'jul',
+		  data: [
+			{
+			  _date: 'jul 5',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'jul 3',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'jul 25',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'aug',
+		  data: [
+			{
+			  _date: 'aug 4',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'aug 3',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'aug 11',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'aug 13',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'sep',
+		  data: [
+			{
+			  _date: 'sep 3',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'sep 2',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'sep 6',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'sep 6',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'sep 5',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'oct',
+		  data: [
+			{
+			  _date: 'oct 3',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'oct 23',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'oct 13',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'oct 23',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'oct 3',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'oct 13',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'nov',
+		  data: [
+			{
+			  _date: 'nov 2',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'nov 2',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'nov 22',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'nov 2',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'nov 22',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'nov 22',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'nov 2',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'nov 22',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'nov 2',
+			  location: 'Dhaka'
+			}
+		  ]
+		},
+		{
+		  month: 'dec',
+		  data: [
+			{
+			  _date: 'dec 5',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 15',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 16',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 5',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 15',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 16',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 5',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 15',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 5',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 16',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 15',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 16',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 16',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 15',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 5',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 15',
+			  location: 'Dhaka'
+			},
+			{
+			  _date: 'dec 5',
+			  location: 'Dhaka'
+			}
+		  ]
+		}
+	  ];
   constructor (options) {
     super()
     this.defaults = Object.assign(this.defaults, {
@@ -540,7 +786,7 @@ class ProPaginate extends Paginate {
       dataItemsArrayPath: 'data',
       dataItemHtml: '',
       showAlldataOnce: false,
-      visibleDataonce: 10,
+      visibleDataonce: 5,
       linkAreaLabel: 1,
       showMoreAreaLabel: '',
       showMoreClass: '',
@@ -551,28 +797,40 @@ class ProPaginate extends Paginate {
     this._init()
   }
   _init () {
-    this.mainContainer = this._selectElement(
+    this.mainContainer = this._selectArrayofElement(
       this.defaults.mainContainerSelector
     )
     if (this._isDataValid()) {
-      this.mainContainer.forEach(function (ele, ind) {
+      this.mainContainer.forEach(function (mainElement) {
         this.pageCount = this.defaults.data.length
-        let paginateWrapper = '<div class="paginate_wrapper">'
-        paginateWrapper += `<div class="items_container ${this.defaults.itemsView}"> </div>`
-        const paginationContainer = this._createPagination(this.pageCount)
-        paginateWrapper += paginationContainer
-        paginateWrapper += '</div>'
-        ele.innerHTML = paginateWrapper
+        const pagination = this._createPagination(this.pageCount)
+        mainElement.innerHTML = pagination
         // get all pagination element and hide them and show only instructed items
-        const allPaginationLinkElements = document.querySelectorAll(
+        const allPaginationLinkElements = this._selectArrayofElement(
           '#pagination_container .data-item'
         )
         this._hideAllShowSpecificPaginationItems(allPaginationLinkElements)
         this._setActiveLink(allPaginationLinkElements)
-        const pageItemsContainer = document.querySelector(
+        this._makePaginationBtnDisable()
+        const pageItemsContainer = this._selectSingleElement(
           '.paginate_wrapper .items_container'
         )
         this._createRenderPageItems(pageItemsContainer, this._currentPage)
+        // handle event of every link items
+        const that = this
+        this._numElemClickHandler(allPaginationLinkElements, pageItemsContainer)
+        this._firstClickHandler(allPaginationLinkElements, pageItemsContainer)
+        this._prevClickHandler(allPaginationLinkElements, pageItemsContainer)
+        this._nextClickHander(allPaginationLinkElements, pageItemsContainer)
+        this._lastClickHandler(allPaginationLinkElements, pageItemsContainer)
+        this._ellipseMoreClickHandler(
+          allPaginationLinkElements,
+          pageItemsContainer
+        )
+        this._ellipseLessClickHandler(
+          allPaginationLinkElements,
+          pageItemsContainer
+        )
       }, this)
     }
   }
@@ -585,7 +843,8 @@ class ProPaginate extends Paginate {
     else return true
   }
   _createRenderPageItems (container, currentpage) {
-    let dataArr = this.defaults.data[11][this.defaults.dataItemsArrayPath]
+    let dataArr =
+      this.defaults.data[currentpage][this.defaults.dataItemsArrayPath]
     let renderToCount = this.defaults.showAlldataOnce
       ? dataArr.length
       : Math.min(this.defaults.visibleDataonce, dataArr.length)
@@ -602,11 +861,32 @@ class ProPaginate extends Paginate {
       allElement += htmlElement
     }
     container.innerHTML = allElement
-    if (this._checkElementOverflows(container)) {
-      container.style.justifyContent = 'flex-start'
-      this._pageItemsHorizontalScroll(container)
-      this._pageItemsTouchScroll(container)
-      this._createRenderShowMore(container)
+
+    this._handlePageScrollandTouchScrollDependingOverflows(container)
+
+    if (dataArr.length > this.defaults.visibleDataonce) {
+      if (!this.isShowMoreSectionExist){
+		this._createRenderShowMore(container)
+		const showMoreSection = this._selectSingleElement(
+		  '.paginate_wrapper .show_more_btn'
+		)
+		showMoreSection.addEventListener(
+		  'click',
+		  this._showMoreClickEventCallback.bind(this)
+		)
+	  }
+    } else {
+      if (this.isShowMoreSectionExist) {
+        const showMoreSection = this._selectSingleElement(
+          '.paginate_wrapper .show_more_btn'
+        )
+          showMoreSection.removeEventListener(
+            'click',
+            this._showMoreClickEventCallback.bind(this)
+          )
+          showMoreSection.remove()
+          this.isShowMoreSectionExist = false;
+      }
     }
   }
 
@@ -618,34 +898,104 @@ class ProPaginate extends Paginate {
     }</span></div>`
     this.defaults.showAlldataOnce ||
       container.insertAdjacentHTML('afterend', showMoreSection)
+    this.isShowMoreSectionExist = true
     this._showHideShowMore(container)
   }
-  _showHideShowMore (container) {
-    const showMoreSection = document.querySelector('.show_more_btn')
-    container.addEventListener('scroll', function (e) {
-      if (container.classList.contains('column_view')) {
+  _showHideShowMoreScrollEventCallback (e) {
+	console.dir(e.target)
+    if (this.isShowMoreSectionExist) {
+      const showMoreSection = this._selectSingleElement(
+        '.paginate_wrapper .show_more_btn'
+      )
+      if (e.target.classList.contains('column_view')) {
         if (
-          container.scrollHeight - 20 <=
-          container.scrollTop + container.clientHeight
-        )
-          showMoreSection.classList.remove('hidden')
-        else showMoreSection.classList.add('hidden')
-      } else if (container.classList.contains('row_view')) {
+          e.target.scrollHeight - 20 <=
+          e.target.scrollTop + e.target.clientHeight
+        ) {
+          showMoreSection.classList.remove('hidden');
+        } else {
+          showMoreSection.classList.add('hidden')
+        }
+      } else if (e.target.classList.contains('row_view')) {
         if (
-          container.scrollWidth - 20 <=
-          container.scrollLeft + container.clientWidth
-        )
+          e.target.scrollWidth - 20 <=
+          e.target.scrollLeft + e.target.clientWidth
+        ) {
           showMoreSection.classList.remove('hidden')
-        else showMoreSection.classList.add('hidden')
+        } else {
+          showMoreSection.classList.add('hidden')
+        }
       }
-    })
+    }
+  }
+  _showHideShowMore (container) {
+    if (this._checkElementOverflows(container)) {
+      container.addEventListener(
+        'scroll',
+        this._showHideShowMoreScrollEventCallback.bind(this)
+      )
+    } else {
+      if (this.isShowMoreSectionExist) {
+        const showMoreSection = this._selectSingleElement(
+          '.paginate_wrapper .show_more_btn'
+        )
+        if (showMoreSection.classList.contains('hidden'))
+          showMoreSection.classList.remove('hidden');
+      }
+    }
+  }
+  _addMorePageItems (itemCount) {
+    const pageItemsContainer = this._selectSingleElement(
+      '.paginate_wrapper .items_container'
+    )
+    const alreadyExistEleCount =
+      pageItemsContainer.querySelectorAll('div.data_item').length
+    const dataArr =
+      this.defaults.data[this._currentPage][this.defaults.dataItemsArrayPath]
+    const loopEnd =
+      dataArr.length - alreadyExistEleCount < itemCount
+        ? dataArr.length - 1
+        : alreadyExistEleCount - 1 + itemCount
+    for (let i = alreadyExistEleCount - 1; i < loopEnd; i++) {
+      const newElements = `<div class="data_item">
+                      <div class="data_item_details">
+                        <span class="data_item_date">${dataArr[i]._date}</span
+                        ><span class="data_item_location">${dataArr[i].location}</span>
+                      </div>
+                  </div>`
+      pageItemsContainer.insertAdjacentHTML('beforeend', newElements)
+    }
+    if (
+      pageItemsContainer.querySelectorAll('div.data_item').length >=
+        dataArr.length &&
+      this.isShowMoreSectionExist
+    ) {
+      this._selectSingleElement('.paginate_wrapper .show_more_btn').remove()
+      this.isShowMoreSectionExist = false;
+    }else{
+      this._selectSingleElement('.paginate_wrapper .show_more_btn').classList.add("hidden");
+    }
+
+    this._handlePageScrollandTouchScrollDependingOverflows(pageItemsContainer);
+  }
+
+  _showMoreClickEventCallback (e) {
+    if (
+      this.defaults.visibleDataonce < 5 &&
+      this.defaults.visibleDataonce > 0
+    ) {
+      this._addMorePageItems(this.defaults.visibleDataonce)
+    } else if (this.defaults.visibleDataonce >= 5) {
+      this._addMorePageItems(Math.round(this.defaults.visibleDataonce / 2))
+    }
   }
 }
 
-// let ProPaginate_1 = new ProPaginate()
-// ProPaginate_1.setCurrentPage = 3
-// let ProPaginate_2 = new ProPaginate()
-// ProPaginate_2.setCurrentPage = 4
 
-// console.log(ProPaginate_1);
-// console.log(ProPaginate_2);
+// class PaginateClassic extends Paginate {
+// next button and previous button only.
+// }
+
+// class PaginateMinimal extends Paginate {
+
+// }
