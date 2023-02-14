@@ -3,6 +3,7 @@
   <head>
     <meta charset="ISO-8859-1" />
     <link rel="stylesheet" href="../src/style/style.min.css">
+    <script src="../src/paginate.es5.min.js"></script>
     <title>Paginate examples</title>
     <style>
       * {
@@ -24,14 +25,12 @@
         justify-content: center;
       }
     </style>
-
   </head>
 
   <body>
     <h1>Paginate examples</h1>
     <h2>Default configuration</h2>
     <div id="paginate"></div>
-    <script src="../src/paginate.min.js"></script>
     <script type="text/javascript">
       let currentMonth = new Date().getMonth();
       document.onreadystatechange = function () {
