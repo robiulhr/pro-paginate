@@ -2,7 +2,7 @@
 
 A open source pagination plugin using pure Javascript.
 
-[paginate Example with default settings](./img/Paginate-example.png)
+![paginate Example with default settings](./img/Paginate-example.png)
 
 # Installation
 
