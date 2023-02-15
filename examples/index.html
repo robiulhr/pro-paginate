@@ -3,7 +3,8 @@
   <head>
     <meta charset="ISO-8859-1" />
     <link rel="stylesheet" href="../src/style/style.min.css">
-    <script src="../src/paginate.es5.min.js"></script>
+    <!-- <script src="../build/paginate.es5.js"></script> -->
+    <script src="../src/paginate.js"></script>
     <title>Paginate examples</title>
     <style>
       * {
@@ -32,10 +33,289 @@
     <h2>Default configuration</h2>
     <div id="paginate"></div>
     <script type="text/javascript">
+       const dummyData = [
+    {
+      month: "jan",
+      data: [
+        {
+          _date: "Jan 20",
+          location: "Chattagram",
+        },
+      ],
+    },
+    {
+      month: "feb",
+      data: [
+        {
+          _date: "feb 20",
+          location: "Chattagram",
+        },
+      ],
+    },
+    {
+      month: "march",
+      data: [
+        {
+          _date: "march 12",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "apr",
+      // data: [
+      //   {
+      //     _date: "apr 12",
+      //     location: "Dhaka",
+      //   },
+      //   {
+      //     _date: "apr 32",
+      //     location: "Dhaka",
+      //   },
+      // ],
+    },
+    {
+      month: "may",
+      data: [
+        {
+          _date: "may 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "may 25",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "jun",
+      data: [
+        {
+          _date: "jun 4",
+          location: "Dhaka",
+        },
+        {
+          _date: "jun 24",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "jul",
+      data: [
+        {
+          _date: "jul 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "jul 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "jul 25",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "aug",
+      data: [
+        {
+          _date: "aug 4",
+          location: "Dhaka",
+        },
+        {
+          _date: "aug 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "aug 11",
+          location: "Dhaka",
+        },
+        {
+          _date: "aug 13",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "sep",
+      data: [
+        {
+          _date: "sep 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "sep 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "sep 6",
+          location: "Dhaka",
+        },
+        {
+          _date: "sep 6",
+          location: "Dhaka",
+        },
+        {
+          _date: "sep 5",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "oct",
+      data: [
+        {
+          _date: "oct 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 23",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 13",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 23",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 13",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "nov",
+      data: [
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 22",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 22",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 22",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 22",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "dec",
+      data: [
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+      ],
+    },
+  ];
       let currentMonth = new Date().getMonth();
       document.onreadystatechange = function () {
         if (document.readyState === "complete") {
-          const example_1 = new ProPaginate();
+          const example_1 = new ProPaginate({
+            data:dummyData,
+            pageLinkAreaLabel:["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"],
+            dataItemHtml: '<div class="data_item"><div class="data_item_details"><span class="data_item_date">${_date}</span><span class="data_item_location">${location}</span></div></div>',
+            dataItemsArrayPath: "data",
+          });
         }
       };
     </script>
