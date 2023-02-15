@@ -368,6 +368,8 @@ document.onreadystatechange = function () {
 | `mainDataArrayEmptyErrorHtml`         | String  | `''`       | Html element to show when the Data Array is empty.                                                                                                    |
 | `singleDataItemArrayEmptyErrorHtml`         | String  | `''`       | Html element to show when a single item of the data Array is empty.                                                                                   |
 
+
+
 ### Options inherited from `Paginate` class
 
 | Option                     | Type    | Default                                    | Description                                                                                              |
@@ -398,8 +400,16 @@ document.onreadystatechange = function () {
 
 | Method            | Type     | Default | Description                                  |
 | ----------------- | -------- | ------- | -------------------------------------------- |
-| `onInit`          | Function | false   | Callback to be run on initialization.        |
 | `onPageDisplayed` | Function | false   | Callback to be run once a page is displayed. |
+| `onLinkClick` | Function | false   | Callback to be run once the user click on any specific page link. |
+| `onFirstClick` | Function | false   | Callback to be run once the user click on the first link. |
+| `onLastClick` | Function | false   | Callback to be run once the user click on the last link.  |
+| `onPrevClick` | Function | false   | Callback to be run once the user click on the prev link. |
+| `onNextClick` | Function | false   | Callback to be run once the user click on the next link.  |
+| `onMoreClick` | Function | false   | Callback to be run once the user click on the more link. |
+| `onLessClick` | Function | false   | Callback to be run once the user click on the less link.  |
+
+
 
 ## Browser Support
 
