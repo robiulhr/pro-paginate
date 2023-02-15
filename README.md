@@ -13,7 +13,7 @@ To start using it straight away, place this in the head of your HTML code:
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/robiulhr/paginate/src/style/style.min.css"
 />
-<script src="https://cdn.jsdelivr.net/gh/robiulhr/paginate/build/paginate.es5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/robiulhr/paginate/build/paginate.es5.js"></script>
 ```
 
 # Usage Guide

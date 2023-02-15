@@ -208,34 +208,36 @@ var Paginate = /*#__PURE__*/function () {
       this.defaults.paginationOrder.forEach(function (element) {
         switch (element) {
           case 'first':
-            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += first : "";
+            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += first : '';
             break;
           case 'prev':
-            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += previous : "";
+            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += previous : '';
             break;
           case 'next':
-            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += next : "";
+            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += next : '';
             break;
           case 'last':
-            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += last : "";
+            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += last : '';
             break;
           case 'num':
-            this.defaults.hasEllips ? this.pageCount > this.defaults.visiblePageCount ? paginationContainer += less : "" : '';
-            var count = 0;
-            while (count <= this.pageCount - 1) {
-              var currentLink = '';
-              switch (count) {
-                case 0:
-                  currentLink = 'first_num_link';
-                  break;
-                case this.pageCount - 1:
-                  currentLink = 'last_num_link';
-                  break;
+            this.defaults.hasEllips ? this.pageCount > this.defaults.visiblePageCount ? paginationContainer += less : '' : '';
+            if (this.pageCount > 1) {
+              var count = 0;
+              while (count <= this.pageCount - 1) {
+                var currentLink = '';
+                switch (count) {
+                  case 0:
+                    currentLink = 'first_num_link';
+                    break;
+                  case this.pageCount - 1:
+                    currentLink = 'last_num_link';
+                    break;
+                }
+                paginationContainer += "<li class=\"pagination_item ".concat(this.defaults.defaultClass, " data-item ").concat(currentLink, "\" aria-label=\"").concat(count, "\"><a href=\"#\" onclick=\"return false\">").concat(Array.isArray(this.defaults.pageLinkAreaLabel) ? this.defaults.pageLinkAreaLabel[count] || count + 1 : count + 1, "</a></li>");
+                count++;
               }
-              paginationContainer += "<li class=\"pagination_item ".concat(this.defaults.defaultClass, " data-item ").concat(currentLink, "\" aria-label=\"").concat(count, "\"><a href=\"#\" onclick=\"return false\">").concat(Array.isArray(this.defaults.pageLinkAreaLabel) ? this.defaults.pageLinkAreaLabel[count] || count + 1 : count + 1, "</a></li>");
-              count++;
             }
-            this.defaults.hasEllips ? this.pageCount > this.defaults.visiblePageCount ? paginationContainer += more : "" : '';
+            this.defaults.hasEllips ? this.pageCount > this.defaults.visiblePageCount ? paginationContainer += more : '' : '';
             break;
         }
       }, this);
@@ -244,41 +246,45 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_hideAllShowSpecificPaginationItems",
     value: function _hideAllShowSpecificPaginationItems(allEle) {
-      allEle.forEach(function (item, ind) {
-        if (ind < this.defaults.startpageNum || ind > this.defaults.startpageNum + (this.defaults.visiblePageCount - 1)) item.style.display = 'none';else item.style.display = 'list-item';
-      }, this);
+      if (this.pageCount > this.defaults.visiblePageCount) {
+        allEle.forEach(function (item, ind) {
+          if (ind < this.defaults.startpageNum || ind > this.defaults.startpageNum + (this.defaults.visiblePageCount - 1)) item.style.display = 'none';else item.style.display = 'list-item';
+        }, this);
+      }
     }
   }, {
     key: "_makePaginationBtnDisable",
     value: function _makePaginationBtnDisable() {
       // handle less ellipse
-      if (this._currentPage <= this.defaults.visiblePageCount - 1) {
-        this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.less').style.display = 'none';
-      } else {
-        this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.less').style.display = 'list-item';
-      }
-      // handle less ellipse
-      if (this._currentPage >= this.pageCount - 1 - this.defaults.visiblePageCount) {
-        this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.more').style.display = 'none';
-      } else {
-        this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.more').style.display = 'list-item';
-      }
-      if (!this.defaults.wrapAround) {
-        // handle prev and first button
-        if (this._currentPage <= 0) {
-          this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_prev').style.display = 'none';
-          this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_first').style.display = 'none';
+      if (this.pageCount > this.defaults.visiblePageCount) {
+        if (this._currentPage <= this.defaults.visiblePageCount - 1) {
+          this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.less').classList.add(this.defaults.disabledClass);
         } else {
-          this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_prev').style.display = 'list-item';
-          this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_first').style.display = 'list-item';
+          this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.less').classList.remove(this.defaults.disabledClass);
         }
-        // handle next and last button
-        if (this._currentPage >= this.pageCount - 1) {
-          this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_next').style.display = 'none';
-          this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_last').style.display = 'none';
+        // handle less ellipse
+        if (this._currentPage >= this.pageCount - 1 - this.defaults.visiblePageCount) {
+          this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.more').classList.add(this.defaults.disabledClass);
         } else {
-          this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_next').style.display = 'list-item';
-          this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_last').style.display = 'list-item';
+          this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.more').classList.remove(this.defaults.disabledClass);
+        }
+        if (!this.defaults.wrapAround) {
+          // handle prev and first button
+          if (this._currentPage <= 0) {
+            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_prev').classList.add(this.defaults.disabledClass);
+            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_first').classList.add(this.defaults.disabledClass);
+          } else {
+            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_prev').classList.remove(this.defaults.disabledClass);
+            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_first').classList.remove(this.defaults.disabledClass);
+          }
+          // handle next and last button
+          if (this._currentPage >= this.pageCount - 1) {
+            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_next').classList.add(this.defaults.disabledClass);
+            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_last').classList.add(this.defaults.disabledClass);
+          } else {
+            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_next').classList.remove(this.defaults.disabledClass);
+            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_last').classList.remove(this.defaults.disabledClass);
+          }
         }
       }
     }
@@ -293,96 +299,104 @@ var Paginate = /*#__PURE__*/function () {
     key: "_firstClickHandler",
     value: function _firstClickHandler(allItems, container) {
       var firstLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_first');
-      var that = this;
-      firstLink.addEventListener('click', function (event) {
-        // call the custom first function
-        that.defaults.onFirstClick.call(that, event);
-        that._currentPage = 0;
-        if (that.defaults.startpageNum != 0) {
-          that.defaults.startpageNum = 0;
-          that._hideAllShowSpecificPaginationItems(allItems);
-        }
-        that._createRenderPageItems(container, that._currentPage);
-        that._setActiveLink(allItems);
-        that._makePaginationBtnDisable();
-      });
-    }
-  }, {
-    key: "_prevClickHandler",
-    value: function _prevClickHandler(allItems, container) {
-      var prevLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_prev');
-      var that = this;
-      prevLink.addEventListener('click', function (event) {
-        // call the prev custom function
-        that.defaults.onPrevClick.call(that, event);
-        if (that._currentPage < that.pageCount && that._currentPage >= 1) {
-          that._currentPage--;
-          if (that._currentPage < that.defaults.startpageNum) {
-            that.defaults.startpageNum--;
+      if (!firstLink.classList.contains(this.defaults.disabledClass)) {
+        var that = this;
+        firstLink.addEventListener('click', function (event) {
+          // call the custom first function
+          that.defaults.onFirstClick.call(that, event);
+          that._currentPage = 0;
+          if (that.defaults.startpageNum != 0) {
+            that.defaults.startpageNum = 0;
             that._hideAllShowSpecificPaginationItems(allItems);
           }
           that._createRenderPageItems(container, that._currentPage);
           that._setActiveLink(allItems);
           that._makePaginationBtnDisable();
-        } else if (that._currentPage <= 0) {
-          if (that.defaults.wrapAround) {
-            that.defaults.startpageNum = that.pageCount - that.defaults.visiblePageCount;
-            that._hideAllShowSpecificPaginationItems(allItems);
-            that._currentPage = that.pageCount - 1;
+        });
+      }
+    }
+  }, {
+    key: "_prevClickHandler",
+    value: function _prevClickHandler(allItems, container) {
+      var prevLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_prev');
+      if (!prevLink.classList.contains(this.defaults.disabledClass)) {
+        var that = this;
+        prevLink.addEventListener('click', function (event) {
+          // call the prev custom function
+          that.defaults.onPrevClick.call(that, event);
+          if (that._currentPage < that.pageCount && that._currentPage >= 1) {
+            that._currentPage--;
+            if (that._currentPage < that.defaults.startpageNum) {
+              that.defaults.startpageNum--;
+              that._hideAllShowSpecificPaginationItems(allItems);
+            }
             that._createRenderPageItems(container, that._currentPage);
             that._setActiveLink(allItems);
             that._makePaginationBtnDisable();
+          } else if (that._currentPage <= 0) {
+            if (that.defaults.wrapAround) {
+              that.defaults.startpageNum = that.pageCount - that.defaults.visiblePageCount;
+              that._hideAllShowSpecificPaginationItems(allItems);
+              that._currentPage = that.pageCount - 1;
+              that._createRenderPageItems(container, that._currentPage);
+              that._setActiveLink(allItems);
+              that._makePaginationBtnDisable();
+            }
           }
-        }
-      });
+        });
+      }
     }
   }, {
     key: "_ellipseMoreClickHandler",
     value: function _ellipseMoreClickHandler(allItems, container) {
       var ellipseMore = this._selectSingleElement('.pagination_wrapper .pagination_item.ellipse.more');
-      var that = this;
-      ellipseMore.addEventListener('click', function (event) {
-        // call the custom more function
-        that.defaults.onMoreClick.call(that, event);
-        if (that.defaults.startpageNum + that.defaults.visiblePageCount > that.pageCount - 1 - that.defaults.visiblePageCount) {
-          that.defaults.startpageNum += (that.pageCount - 1) % that.defaults.visiblePageCount - 1;
-        } else {
-          that.defaults.startpageNum += that.defaults.visiblePageCount;
-        }
-        if (that._currentPage + that.defaults.visiblePageCount > that.pageCount - 1) {
-          that._currentPage += (that.pageCount - 1) % that.defaults.visiblePageCount - 1;
-        } else {
-          that._currentPage += that.defaults.visiblePageCount;
-        }
-        that._hideAllShowSpecificPaginationItems(allItems);
-        that._createRenderPageItems(container, that._currentPage);
-        that._setActiveLink(allItems);
-        that._makePaginationBtnDisable();
-      });
+      if (!ellipseMore.classList.contains(this.defaults.disabledClass)) {
+        var that = this;
+        ellipseMore.addEventListener('click', function (event) {
+          // call the custom more function
+          that.defaults.onMoreClick.call(that, event);
+          if (that.defaults.startpageNum + that.defaults.visiblePageCount > that.pageCount - 1 - that.defaults.visiblePageCount) {
+            that.defaults.startpageNum += (that.pageCount - 1) % that.defaults.visiblePageCount - 1;
+          } else {
+            that.defaults.startpageNum += that.defaults.visiblePageCount;
+          }
+          if (that._currentPage + that.defaults.visiblePageCount > that.pageCount - 1) {
+            that._currentPage += (that.pageCount - 1) % that.defaults.visiblePageCount - 1;
+          } else {
+            that._currentPage += that.defaults.visiblePageCount;
+          }
+          that._hideAllShowSpecificPaginationItems(allItems);
+          that._createRenderPageItems(container, that._currentPage);
+          that._setActiveLink(allItems);
+          that._makePaginationBtnDisable();
+        });
+      }
     }
   }, {
     key: "_ellipseLessClickHandler",
     value: function _ellipseLessClickHandler(allItems, container) {
       var ellipseLess = this._selectSingleElement('.pagination_wrapper .pagination_item.ellipse.less');
-      var that = this;
-      ellipseLess.addEventListener('click', function (event) {
-        // call the custom less function
-        that.defaults.onLessClick.call(that, event);
-        if (that.defaults.startpageNum < that.defaults.visiblePageCount) {
-          that.defaults.startpageNum -= that.defaults.startpageNum % that.defaults.visiblePageCount;
-        } else {
-          that.defaults.startpageNum -= that.defaults.visiblePageCount;
-        }
-        if (that._currentPage < that.defaults.visiblePageCount) {
-          that._currentPage -= that._currentPage % that.defaults.visiblePageCount - 1;
-        } else {
-          that._currentPage -= that.defaults.visiblePageCount;
-        }
-        that._hideAllShowSpecificPaginationItems(allItems);
-        that._createRenderPageItems(container, that._currentPage);
-        that._setActiveLink(allItems);
-        that._makePaginationBtnDisable();
-      });
+      if (!ellipseLess.classList.contains(this.defaults.disabledClass)) {
+        var that = this;
+        ellipseLess.addEventListener('click', function (event) {
+          // call the custom less function
+          that.defaults.onLessClick.call(that, event);
+          if (that.defaults.startpageNum < that.defaults.visiblePageCount) {
+            that.defaults.startpageNum -= that.defaults.startpageNum % that.defaults.visiblePageCount;
+          } else {
+            that.defaults.startpageNum -= that.defaults.visiblePageCount;
+          }
+          if (that._currentPage < that.defaults.visiblePageCount) {
+            that._currentPage -= that._currentPage % that.defaults.visiblePageCount - 1;
+          } else {
+            that._currentPage -= that.defaults.visiblePageCount;
+          }
+          that._hideAllShowSpecificPaginationItems(allItems);
+          that._createRenderPageItems(container, that._currentPage);
+          that._setActiveLink(allItems);
+          that._makePaginationBtnDisable();
+        });
+      }
     }
   }, {
     key: "_numElemClickHandler",
@@ -404,48 +418,52 @@ var Paginate = /*#__PURE__*/function () {
     key: "_nextClickHander",
     value: function _nextClickHander(allItems, container) {
       var nextLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_next');
-      var that = this;
-      nextLink.addEventListener('click', function (event) {
-        // call the custom next function
-        that.defaults.onNextClick.call(that, event);
-        if (that._currentPage < that.pageCount - 1 && that._currentPage >= 0) {
-          that._currentPage++;
-          if (that._currentPage >= that.defaults.startpageNum + that.defaults.visiblePageCount) {
-            that.defaults.startpageNum++;
-            that._hideAllShowSpecificPaginationItems(allItems);
-          }
-          that._createRenderPageItems(container, that._currentPage);
-          that._setActiveLink(allItems);
-          that._makePaginationBtnDisable();
-        } else if (that._currentPage >= that.pageCount - 1) {
-          if (that.defaults.wrapAround) {
-            that.defaults.startpageNum = 0;
-            that._hideAllShowSpecificPaginationItems(allItems);
-            that._currentPage = 0;
+      if (!nextLink.classList.contains(this.defaults.disabledClass)) {
+        var that = this;
+        nextLink.addEventListener('click', function (event) {
+          // call the custom next function
+          that.defaults.onNextClick.call(that, event);
+          if (that._currentPage < that.pageCount - 1 && that._currentPage >= 0) {
+            that._currentPage++;
+            if (that._currentPage >= that.defaults.startpageNum + that.defaults.visiblePageCount) {
+              that.defaults.startpageNum++;
+              that._hideAllShowSpecificPaginationItems(allItems);
+            }
             that._createRenderPageItems(container, that._currentPage);
             that._setActiveLink(allItems);
             that._makePaginationBtnDisable();
+          } else if (that._currentPage >= that.pageCount - 1) {
+            if (that.defaults.wrapAround) {
+              that.defaults.startpageNum = 0;
+              that._hideAllShowSpecificPaginationItems(allItems);
+              that._currentPage = 0;
+              that._createRenderPageItems(container, that._currentPage);
+              that._setActiveLink(allItems);
+              that._makePaginationBtnDisable();
+            }
           }
-        }
-      });
+        });
+      }
     }
   }, {
     key: "_lastClickHandler",
     value: function _lastClickHandler(allItems, container) {
       var lastLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_last');
-      var that = this;
-      lastLink.addEventListener('click', function (event) {
-        // call the custom last function
-        that.defaults.onLastClick.call(that, event);
-        that._currentPage = that.pageCount - 1;
-        if (that.defaults.startpageNum != that.pageCount - that.defaults.visiblePageCount) {
-          that.defaults.startpageNum = that.pageCount - that.defaults.visiblePageCount;
-          that._hideAllShowSpecificPaginationItems(allItems);
-        }
-        that._createRenderPageItems(container, that._currentPage);
-        that._setActiveLink(allItems);
-        that._makePaginationBtnDisable();
-      });
+      if (!lastLink.classList.contains(this.defaults.disabledClass)) {
+        var that = this;
+        lastLink.addEventListener('click', function (event) {
+          // call the custom last function
+          that.defaults.onLastClick.call(that, event);
+          that._currentPage = that.pageCount - 1;
+          if (that.defaults.startpageNum != that.pageCount - that.defaults.visiblePageCount) {
+            that.defaults.startpageNum = that.pageCount - that.defaults.visiblePageCount;
+            that._hideAllShowSpecificPaginationItems(allItems);
+          }
+          that._createRenderPageItems(container, that._currentPage);
+          that._setActiveLink(allItems);
+          that._makePaginationBtnDisable();
+        });
+      }
     }
   }]);
   return Paginate;
@@ -467,8 +485,8 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
       visibleDataonce: 5,
       showMoreAreaLabel: 'Show More',
       showMoreClass: 'show_more',
-      mainDataArrayEmptyErrorHtml: "",
-      singleDataItemArrayEmptyErrorHtml: "",
+      mainDataArrayEmptyErrorHtml: '',
+      singleDataItemArrayEmptyErrorHtml: '',
       onShowMoreClick: function onShowMoreClick() {}
     });
     _this2._optionsHandler(options);
@@ -490,21 +508,28 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
           var pagination = this._createPagination();
           mainElement.innerHTML = pagination;
           // get all pagination element and hide them and show only instructed items
-          var allPaginationLinkElements = this._selectArrayofElement('#pagination_container .data-item');
-          this._hideAllShowSpecificPaginationItems(allPaginationLinkElements);
-          this._setActiveLink(allPaginationLinkElements);
-          this._makePaginationBtnDisable();
-          var pageItemsContainer = this._selectSingleElement('.paginate_wrapper .items_container');
-          this._createRenderPageItems(pageItemsContainer, this._currentPage);
-          // handle event of every link items
-          var that = this;
-          this._numElemClickHandler(allPaginationLinkElements, pageItemsContainer);
-          this._firstClickHandler(allPaginationLinkElements, pageItemsContainer);
-          this._prevClickHandler(allPaginationLinkElements, pageItemsContainer);
-          this._nextClickHander(allPaginationLinkElements, pageItemsContainer);
-          this._lastClickHandler(allPaginationLinkElements, pageItemsContainer);
-          this._ellipseMoreClickHandler(allPaginationLinkElements, pageItemsContainer);
-          this._ellipseLessClickHandler(allPaginationLinkElements, pageItemsContainer);
+          if (this.pageCount > 1) {
+            var allPaginationLinkElements = this._selectArrayofElement('#pagination_container .data-item');
+            this._hideAllShowSpecificPaginationItems(allPaginationLinkElements);
+            this._setActiveLink(allPaginationLinkElements);
+            this._makePaginationBtnDisable();
+            var pageItemsContainer = this._selectSingleElement('.paginate_wrapper .items_container');
+            this._createRenderPageItems(pageItemsContainer, this._currentPage);
+            // handle event of every link items
+            var that = this;
+            this._numElemClickHandler(allPaginationLinkElements, pageItemsContainer);
+            if (this.pageCount > this.defaults.visiblePageCount) {
+              this._firstClickHandler(allPaginationLinkElements, pageItemsContainer);
+              this._prevClickHandler(allPaginationLinkElements, pageItemsContainer);
+              this._nextClickHander(allPaginationLinkElements, pageItemsContainer);
+              this._lastClickHandler(allPaginationLinkElements, pageItemsContainer);
+              this._ellipseMoreClickHandler(allPaginationLinkElements, pageItemsContainer);
+              this._ellipseLessClickHandler(allPaginationLinkElements, pageItemsContainer);
+            }
+          } else {
+            var _pageItemsContainer = this._selectSingleElement('.paginate_wrapper .items_container');
+            this._createRenderPageItems(_pageItemsContainer, this._currentPage);
+          }
         }, this);
       }
     }
