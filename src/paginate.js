@@ -862,8 +862,7 @@ class ProPaginate extends Paginate {
     else return true;
   }
   _createRenderPageItems(container, currentpage) {
-    let dataArr =
-      this.defaults.data[currentpage][this.defaults.dataItemsArrayPath];
+    let dataArr = this.defaults.data[currentpage]?.[this.defaults.dataItemsArrayPath] || [];
     let renderToCount = this.defaults.showAlldataOnce
       ? dataArr.length
       : Math.min(this.defaults.visibleDataonce, dataArr.length);
