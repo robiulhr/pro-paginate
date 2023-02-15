@@ -130,3 +130,6 @@
     color: var(--text-color-2);
   }
   
+  .paginate_wrapper .pagination_item.disabled{
+    display: none !important;
+  }

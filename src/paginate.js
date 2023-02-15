@@ -213,40 +213,58 @@ class Paginate {
     this.defaults.paginationOrder.forEach(function (element) {
       switch (element) {
         case 'first':
-         this.pageCount> this.defaults.visiblePageCount ?  paginationContainer += first  : ""
+          this.pageCount > this.defaults.visiblePageCount
+            ? (paginationContainer += first)
+            : ''
           break
         case 'prev':
-          this.pageCount> this.defaults.visiblePageCount ?  paginationContainer += previous : ""
+          this.pageCount > this.defaults.visiblePageCount
+            ? (paginationContainer += previous)
+            : ''
           break
         case 'next':
-          this.pageCount> this.defaults.visiblePageCount ? paginationContainer += next : ""
+          this.pageCount > this.defaults.visiblePageCount
+            ? (paginationContainer += next)
+            : ''
           break
         case 'last':
-          this.pageCount> this.defaults.visiblePageCount ? paginationContainer += last : ""
+          this.pageCount > this.defaults.visiblePageCount
+            ? (paginationContainer += last)
+            : ''
           break
         case 'num':
-          this.defaults.hasEllips ? this.pageCount> this.defaults.visiblePageCount ? paginationContainer += less : "" : ''
-          let count = 0
-          while (count <= this.pageCount - 1) {
-            let currentLink = ''
-            switch (count) {
-              case 0:
-                currentLink = 'first_num_link'
-                break
-              case this.pageCount - 1:
-                currentLink = 'last_num_link'
-                break
+          this.defaults.hasEllips
+            ? this.pageCount > this.defaults.visiblePageCount
+              ? (paginationContainer += less)
+              : ''
+            : ''
+          if (this.pageCount > 1) {
+            let count = 0
+            while (count <= this.pageCount - 1) {
+              let currentLink = ''
+              switch (count) {
+                case 0:
+                  currentLink = 'first_num_link'
+                  break
+                case this.pageCount - 1:
+                  currentLink = 'last_num_link'
+                  break
+              }
+              paginationContainer += `<li class="pagination_item ${
+                this.defaults.defaultClass
+              } data-item ${currentLink}" aria-label="${count}"><a href="#" onclick="return false">${
+                Array.isArray(this.defaults.pageLinkAreaLabel)
+                  ? this.defaults.pageLinkAreaLabel[count] || count + 1
+                  : count + 1
+              }</a></li>`
+              count++
             }
-            paginationContainer += `<li class="pagination_item ${
-              this.defaults.defaultClass
-            } data-item ${currentLink}" aria-label="${count}"><a href="#" onclick="return false">${
-              Array.isArray(this.defaults.pageLinkAreaLabel)
-                ? this.defaults.pageLinkAreaLabel[count] || count + 1
-                : count + 1
-            }</a></li>`
-            count++
           }
-          this.defaults.hasEllips ? this.pageCount> this.defaults.visiblePageCount ? paginationContainer += more : "" : ''
+          this.defaults.hasEllips
+            ? this.pageCount > this.defaults.visiblePageCount
+              ? (paginationContainer += more)
+              : ''
+            : ''
           break
       }
     }, this)
@@ -254,71 +272,76 @@ class Paginate {
   }
 
   _hideAllShowSpecificPaginationItems (allEle) {
-    allEle.forEach(function (item, ind) {
-      if (
-        ind < this.defaults.startpageNum ||
-        ind > this.defaults.startpageNum + (this.defaults.visiblePageCount - 1)
-      )
-        item.style.display = 'none'
-      else item.style.display = 'list-item'
-    }, this)
+    if (this.pageCount > this.defaults.visiblePageCount) {
+      allEle.forEach(function (item, ind) {
+        if (
+          ind < this.defaults.startpageNum ||
+          ind >
+            this.defaults.startpageNum + (this.defaults.visiblePageCount - 1)
+        )
+          item.style.display = 'none'
+        else item.style.display = 'list-item'
+      }, this)
+    }
   }
   _makePaginationBtnDisable () {
     // handle less ellipse
-    if (this._currentPage <= this.defaults.visiblePageCount - 1) {
-      this._selectSingleElement(
-        '.paginate_wrapper .pagination_item.ellipse.less'
-      ).style.display = 'none'
-    } else {
-      this._selectSingleElement(
-        '.paginate_wrapper .pagination_item.ellipse.less'
-      ).style.display = 'list-item'
-    }
-    // handle less ellipse
-    if (
-      this._currentPage >=
-      this.pageCount - 1 - this.defaults.visiblePageCount
-    ) {
-      this._selectSingleElement(
-        '.paginate_wrapper .pagination_item.ellipse.more'
-      ).style.display = 'none'
-    } else {
-      this._selectSingleElement(
-        '.paginate_wrapper .pagination_item.ellipse.more'
-      ).style.display = 'list-item'
-    }
-    if (!this.defaults.wrapAround) {
-      // handle prev and first button
-      if (this._currentPage <= 0) {
+    if (this.pageCount > this.defaults.visiblePageCount) {
+      if (this._currentPage <= this.defaults.visiblePageCount - 1) {
         this._selectSingleElement(
-          '.paginate_wrapper .pagination_item.paginaiton_prev'
-        ).style.display = 'none'
-        this._selectSingleElement(
-          '.paginate_wrapper .pagination_item.paginaiton_first'
-        ).style.display = 'none'
+          '.paginate_wrapper .pagination_item.ellipse.less'
+        ).classList.add(this.defaults.disabledClass)
       } else {
         this._selectSingleElement(
-          '.paginate_wrapper .pagination_item.paginaiton_prev'
-        ).style.display = 'list-item'
-        this._selectSingleElement(
-          '.paginate_wrapper .pagination_item.paginaiton_first'
-        ).style.display = 'list-item'
+          '.paginate_wrapper .pagination_item.ellipse.less'
+        ).classList.remove(this.defaults.disabledClass)
       }
-      // handle next and last button
-      if (this._currentPage >= this.pageCount - 1) {
+      // handle less ellipse
+      if (
+        this._currentPage >=
+        this.pageCount - 1 - this.defaults.visiblePageCount
+      ) {
         this._selectSingleElement(
-          '.paginate_wrapper .pagination_item.paginaiton_next'
-        ).style.display = 'none'
-        this._selectSingleElement(
-          '.paginate_wrapper .pagination_item.paginaiton_last'
-        ).style.display = 'none'
+          '.paginate_wrapper .pagination_item.ellipse.more'
+        ).classList.add(this.defaults.disabledClass)
       } else {
         this._selectSingleElement(
-          '.paginate_wrapper .pagination_item.paginaiton_next'
-        ).style.display = 'list-item'
-        this._selectSingleElement(
-          '.paginate_wrapper .pagination_item.paginaiton_last'
-        ).style.display = 'list-item'
+          '.paginate_wrapper .pagination_item.ellipse.more'
+        ).classList.remove(this.defaults.disabledClass)
+      }
+      if (!this.defaults.wrapAround) {
+        // handle prev and first button
+        if (this._currentPage <= 0) {
+          this._selectSingleElement(
+            '.paginate_wrapper .pagination_item.paginaiton_prev'
+          ).classList.add(this.defaults.disabledClass)
+          this._selectSingleElement(
+            '.paginate_wrapper .pagination_item.paginaiton_first'
+          ).classList.add(this.defaults.disabledClass)
+        } else {
+          this._selectSingleElement(
+            '.paginate_wrapper .pagination_item.paginaiton_prev'
+          ).classList.remove(this.defaults.disabledClass)
+          this._selectSingleElement(
+            '.paginate_wrapper .pagination_item.paginaiton_first'
+          ).classList.remove(this.defaults.disabledClass)
+        }
+        // handle next and last button
+        if (this._currentPage >= this.pageCount - 1) {
+          this._selectSingleElement(
+            '.paginate_wrapper .pagination_item.paginaiton_next'
+          ).classList.add(this.defaults.disabledClass)
+          this._selectSingleElement(
+            '.paginate_wrapper .pagination_item.paginaiton_last'
+          ).classList.add(this.defaults.disabledClass)
+        } else {
+          this._selectSingleElement(
+            '.paginate_wrapper .pagination_item.paginaiton_next'
+          ).classList.remove(this.defaults.disabledClass)
+          this._selectSingleElement(
+            '.paginate_wrapper .pagination_item.paginaiton_last'
+          ).classList.remove(this.defaults.disabledClass)
+        }
       }
     }
   }
@@ -335,110 +358,119 @@ class Paginate {
     const firstLink = this._selectSingleElement(
       '.pagination_wrapper .pagination_item.paginaiton_first'
     )
-    const that = this
-    firstLink.addEventListener('click', function (event) {
-      // call the custom first function
-      that.defaults.onFirstClick.call(that, event)
-      that._currentPage = 0
-      if (that.defaults.startpageNum != 0) {
-        that.defaults.startpageNum = 0
-        that._hideAllShowSpecificPaginationItems(allItems)
-      }
-      that._createRenderPageItems(container, that._currentPage)
-      that._setActiveLink(allItems)
-      that._makePaginationBtnDisable()
-    })
-  }
-  _prevClickHandler (allItems, container) {
-    const prevLink = this._selectSingleElement(
-      '.pagination_wrapper .pagination_item.paginaiton_prev'
-    )
-    const that = this
-    prevLink.addEventListener('click', function (event) {
-      // call the prev custom function
-      that.defaults.onPrevClick.call(that, event)
-      if (that._currentPage < that.pageCount && that._currentPage >= 1) {
-        that._currentPage--
-        if (that._currentPage < that.defaults.startpageNum) {
-          that.defaults.startpageNum--
+    if (!firstLink.classList.contains(this.defaults.disabledClass)) {
+      const that = this
+      firstLink.addEventListener('click', function (event) {
+        // call the custom first function
+        that.defaults.onFirstClick.call(that, event)
+        that._currentPage = 0
+        if (that.defaults.startpageNum != 0) {
+          that.defaults.startpageNum = 0
           that._hideAllShowSpecificPaginationItems(allItems)
         }
         that._createRenderPageItems(container, that._currentPage)
         that._setActiveLink(allItems)
         that._makePaginationBtnDisable()
-      } else if (that._currentPage <= 0) {
-        if (that.defaults.wrapAround) {
-          that.defaults.startpageNum =
-            that.pageCount - that.defaults.visiblePageCount
-          that._hideAllShowSpecificPaginationItems(allItems)
-          that._currentPage = that.pageCount - 1
+      })
+    }
+  }
+  _prevClickHandler (allItems, container) {
+    const prevLink = this._selectSingleElement(
+      '.pagination_wrapper .pagination_item.paginaiton_prev'
+    )
+    if (!prevLink.classList.contains(this.defaults.disabledClass)) {
+      const that = this
+      prevLink.addEventListener('click', function (event) {
+        // call the prev custom function
+        that.defaults.onPrevClick.call(that, event)
+        if (that._currentPage < that.pageCount && that._currentPage >= 1) {
+          that._currentPage--
+          if (that._currentPage < that.defaults.startpageNum) {
+            that.defaults.startpageNum--
+            that._hideAllShowSpecificPaginationItems(allItems)
+          }
           that._createRenderPageItems(container, that._currentPage)
           that._setActiveLink(allItems)
           that._makePaginationBtnDisable()
+        } else if (that._currentPage <= 0) {
+          if (that.defaults.wrapAround) {
+            that.defaults.startpageNum =
+              that.pageCount - that.defaults.visiblePageCount
+            that._hideAllShowSpecificPaginationItems(allItems)
+            that._currentPage = that.pageCount - 1
+            that._createRenderPageItems(container, that._currentPage)
+            that._setActiveLink(allItems)
+            that._makePaginationBtnDisable()
+          }
         }
-      }
-    })
+      })
+    }
   }
   _ellipseMoreClickHandler (allItems, container) {
     const ellipseMore = this._selectSingleElement(
       '.pagination_wrapper .pagination_item.ellipse.more'
     )
-    const that = this
-    ellipseMore.addEventListener('click', function (event) {
-      // call the custom more function
-      that.defaults.onMoreClick.call(that, event)
-      if (
-        that.defaults.startpageNum + that.defaults.visiblePageCount >
-        that.pageCount - 1 - that.defaults.visiblePageCount
-      ) {
-        that.defaults.startpageNum +=
-          ((that.pageCount - 1) % that.defaults.visiblePageCount) - 1
-      } else {
-        that.defaults.startpageNum += that.defaults.visiblePageCount
-      }
-      if (
-        that._currentPage + that.defaults.visiblePageCount >
-        that.pageCount - 1
-      ) {
-        that._currentPage +=
-          ((that.pageCount - 1) % that.defaults.visiblePageCount) - 1
-      } else {
-        that._currentPage += that.defaults.visiblePageCount
-      }
 
-      that._hideAllShowSpecificPaginationItems(allItems)
-      that._createRenderPageItems(container, that._currentPage)
-      that._setActiveLink(allItems)
-      that._makePaginationBtnDisable()
-    })
+    if (!ellipseMore.classList.contains(this.defaults.disabledClass)) {
+      const that = this
+      ellipseMore.addEventListener('click', function (event) {
+        // call the custom more function
+        that.defaults.onMoreClick.call(that, event)
+        if (
+          that.defaults.startpageNum + that.defaults.visiblePageCount >
+          that.pageCount - 1 - that.defaults.visiblePageCount
+        ) {
+          that.defaults.startpageNum +=
+            ((that.pageCount - 1) % that.defaults.visiblePageCount) - 1
+        } else {
+          that.defaults.startpageNum += that.defaults.visiblePageCount
+        }
+        if (
+          that._currentPage + that.defaults.visiblePageCount >
+          that.pageCount - 1
+        ) {
+          that._currentPage +=
+            ((that.pageCount - 1) % that.defaults.visiblePageCount) - 1
+        } else {
+          that._currentPage += that.defaults.visiblePageCount
+        }
+
+        that._hideAllShowSpecificPaginationItems(allItems)
+        that._createRenderPageItems(container, that._currentPage)
+        that._setActiveLink(allItems)
+        that._makePaginationBtnDisable()
+      })
+    }
   }
   _ellipseLessClickHandler (allItems, container) {
     const ellipseLess = this._selectSingleElement(
       '.pagination_wrapper .pagination_item.ellipse.less'
     )
-    const that = this
-    ellipseLess.addEventListener('click', function (event) {
-      // call the custom less function
-      that.defaults.onLessClick.call(that, event)
+    if (!ellipseLess.classList.contains(this.defaults.disabledClass)) {
+      const that = this
+      ellipseLess.addEventListener('click', function (event) {
+        // call the custom less function
+        that.defaults.onLessClick.call(that, event)
 
-      if (that.defaults.startpageNum < that.defaults.visiblePageCount) {
-        that.defaults.startpageNum -=
-          that.defaults.startpageNum % that.defaults.visiblePageCount
-      } else {
-        that.defaults.startpageNum -= that.defaults.visiblePageCount
-      }
-      if (that._currentPage < that.defaults.visiblePageCount) {
-        that._currentPage -=
-          (that._currentPage % that.defaults.visiblePageCount) - 1
-      } else {
-        that._currentPage -= that.defaults.visiblePageCount
-      }
+        if (that.defaults.startpageNum < that.defaults.visiblePageCount) {
+          that.defaults.startpageNum -=
+            that.defaults.startpageNum % that.defaults.visiblePageCount
+        } else {
+          that.defaults.startpageNum -= that.defaults.visiblePageCount
+        }
+        if (that._currentPage < that.defaults.visiblePageCount) {
+          that._currentPage -=
+            (that._currentPage % that.defaults.visiblePageCount) - 1
+        } else {
+          that._currentPage -= that.defaults.visiblePageCount
+        }
 
-      that._hideAllShowSpecificPaginationItems(allItems)
-      that._createRenderPageItems(container, that._currentPage)
-      that._setActiveLink(allItems)
-      that._makePaginationBtnDisable()
-    })
+        that._hideAllShowSpecificPaginationItems(allItems)
+        that._createRenderPageItems(container, that._currentPage)
+        that._setActiveLink(allItems)
+        that._makePaginationBtnDisable()
+      })
+    }
   }
   _numElemClickHandler (allItems, container) {
     allItems.forEach((linkElement, linkEleInd) => {
@@ -458,55 +490,59 @@ class Paginate {
     const nextLink = this._selectSingleElement(
       '.pagination_wrapper .pagination_item.paginaiton_next'
     )
-    const that = this
-    nextLink.addEventListener('click', function (event) {
-      // call the custom next function
-      that.defaults.onNextClick.call(that, event)
-      if (that._currentPage < that.pageCount - 1 && that._currentPage >= 0) {
-        that._currentPage++
-        if (
-          that._currentPage >=
-          that.defaults.startpageNum + that.defaults.visiblePageCount
-        ) {
-          that.defaults.startpageNum++
-          that._hideAllShowSpecificPaginationItems(allItems)
-        }
-        that._createRenderPageItems(container, that._currentPage)
-        that._setActiveLink(allItems)
-        that._makePaginationBtnDisable()
-      } else if (that._currentPage >= that.pageCount - 1) {
-        if (that.defaults.wrapAround) {
-          that.defaults.startpageNum = 0
-          that._hideAllShowSpecificPaginationItems(allItems)
-          that._currentPage = 0
+    if (!nextLink.classList.contains(this.defaults.disabledClass)) {
+      const that = this
+      nextLink.addEventListener('click', function (event) {
+        // call the custom next function
+        that.defaults.onNextClick.call(that, event)
+        if (that._currentPage < that.pageCount - 1 && that._currentPage >= 0) {
+          that._currentPage++
+          if (
+            that._currentPage >=
+            that.defaults.startpageNum + that.defaults.visiblePageCount
+          ) {
+            that.defaults.startpageNum++
+            that._hideAllShowSpecificPaginationItems(allItems)
+          }
           that._createRenderPageItems(container, that._currentPage)
           that._setActiveLink(allItems)
           that._makePaginationBtnDisable()
+        } else if (that._currentPage >= that.pageCount - 1) {
+          if (that.defaults.wrapAround) {
+            that.defaults.startpageNum = 0
+            that._hideAllShowSpecificPaginationItems(allItems)
+            that._currentPage = 0
+            that._createRenderPageItems(container, that._currentPage)
+            that._setActiveLink(allItems)
+            that._makePaginationBtnDisable()
+          }
         }
-      }
-    })
+      })
+    }
   }
   _lastClickHandler (allItems, container) {
     const lastLink = this._selectSingleElement(
       '.pagination_wrapper .pagination_item.paginaiton_last'
     )
-    const that = this
-    lastLink.addEventListener('click', function (event) {
-      // call the custom last function
-      that.defaults.onLastClick.call(that, event)
-      that._currentPage = that.pageCount - 1
-      if (
-        that.defaults.startpageNum !=
-        that.pageCount - that.defaults.visiblePageCount
-      ) {
-        that.defaults.startpageNum =
+    if (!lastLink.classList.contains(this.defaults.disabledClass)) {
+      const that = this
+      lastLink.addEventListener('click', function (event) {
+        // call the custom last function
+        that.defaults.onLastClick.call(that, event)
+        that._currentPage = that.pageCount - 1
+        if (
+          that.defaults.startpageNum !=
           that.pageCount - that.defaults.visiblePageCount
-        that._hideAllShowSpecificPaginationItems(allItems)
-      }
-      that._createRenderPageItems(container, that._currentPage)
-      that._setActiveLink(allItems)
-      that._makePaginationBtnDisable()
-    })
+        ) {
+          that.defaults.startpageNum =
+            that.pageCount - that.defaults.visiblePageCount
+          that._hideAllShowSpecificPaginationItems(allItems)
+        }
+        that._createRenderPageItems(container, that._currentPage)
+        that._setActiveLink(allItems)
+        that._makePaginationBtnDisable()
+      })
+    }
   }
 }
 
@@ -522,8 +558,8 @@ class ProPaginate extends Paginate {
       visibleDataonce: 5,
       showMoreAreaLabel: 'Show More',
       showMoreClass: 'show_more',
-      mainDataArrayEmptyErrorHtml:"",
-      singleDataItemArrayEmptyErrorHtml:"",
+      mainDataArrayEmptyErrorHtml: '',
+      singleDataItemArrayEmptyErrorHtml: '',
       onShowMoreClick: function () {}
     })
     this._optionsHandler(options)
@@ -537,38 +573,61 @@ class ProPaginate extends Paginate {
     if (this._isDataValid()) {
       this.mainContainer.forEach(function (mainElement) {
         if (this.defaults.data.length == 0) {
-          mainElement.innerHTML = this.defaults.mainDataArrayEmptyErrorHtml || `<div>no data found.</div>`
+          mainElement.innerHTML =
+            this.defaults.mainDataArrayEmptyErrorHtml ||
+            `<div>no data found.</div>`
           return
         }
         this.pageCount = this.defaults.data.length
         const pagination = this._createPagination()
         mainElement.innerHTML = pagination
         // get all pagination element and hide them and show only instructed items
-        const allPaginationLinkElements = this._selectArrayofElement(
-          '#pagination_container .data-item'
-        )
-        this._hideAllShowSpecificPaginationItems(allPaginationLinkElements)
-        this._setActiveLink(allPaginationLinkElements)
-        this._makePaginationBtnDisable()
-        const pageItemsContainer = this._selectSingleElement(
-          '.paginate_wrapper .items_container'
-        )
-        this._createRenderPageItems(pageItemsContainer, this._currentPage)
-        // handle event of every link items
-        const that = this
-        this._numElemClickHandler(allPaginationLinkElements, pageItemsContainer)
-        this._firstClickHandler(allPaginationLinkElements, pageItemsContainer)
-        this._prevClickHandler(allPaginationLinkElements, pageItemsContainer)
-        this._nextClickHander(allPaginationLinkElements, pageItemsContainer)
-        this._lastClickHandler(allPaginationLinkElements, pageItemsContainer)
-        this._ellipseMoreClickHandler(
-          allPaginationLinkElements,
-          pageItemsContainer
-        )
-        this._ellipseLessClickHandler(
-          allPaginationLinkElements,
-          pageItemsContainer
-        )
+        if (this.pageCount > 1) {
+          const allPaginationLinkElements = this._selectArrayofElement(
+            '#pagination_container .data-item'
+          )
+          this._hideAllShowSpecificPaginationItems(allPaginationLinkElements)
+          this._setActiveLink(allPaginationLinkElements)
+          this._makePaginationBtnDisable()
+          const pageItemsContainer = this._selectSingleElement(
+            '.paginate_wrapper .items_container'
+          )
+          this._createRenderPageItems(pageItemsContainer, this._currentPage)
+          // handle event of every link items
+          const that = this
+          this._numElemClickHandler(
+            allPaginationLinkElements,
+            pageItemsContainer
+          )
+          if (this.pageCount > this.defaults.visiblePageCount) {
+            this._firstClickHandler(
+              allPaginationLinkElements,
+              pageItemsContainer
+            )
+            this._prevClickHandler(
+              allPaginationLinkElements,
+              pageItemsContainer
+            )
+            this._nextClickHander(allPaginationLinkElements, pageItemsContainer)
+            this._lastClickHandler(
+              allPaginationLinkElements,
+              pageItemsContainer
+            )
+            this._ellipseMoreClickHandler(
+              allPaginationLinkElements,
+              pageItemsContainer
+            )
+            this._ellipseLessClickHandler(
+              allPaginationLinkElements,
+              pageItemsContainer
+            )
+          }
+        } else {
+          const pageItemsContainer = this._selectSingleElement(
+            '.paginate_wrapper .items_container'
+          )
+          this._createRenderPageItems(pageItemsContainer, this._currentPage)
+        }
       }, this)
     }
   }
@@ -633,7 +692,9 @@ class ProPaginate extends Paginate {
         }
       }
     } else {
-      container.innerHTML =  this.defaults.singleDataItemArrayEmptyErrorHtml || `<div>No data available in this page.</div>`
+      container.innerHTML =
+        this.defaults.singleDataItemArrayEmptyErrorHtml ||
+        `<div>No data available in this page.</div>`
     }
   }
 
