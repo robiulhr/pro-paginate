@@ -9,21 +9,20 @@ A open source pagination plugin using pure Javascript.
 To start using it straight away, place this in the head of your HTML code:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/robiulhr/paginate/src/style/style.min.css"/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/robiulhr/paginate/src/style/style.min.css"
+/>
 <script src="https://cdn.jsdelivr.net/gh/robiulhr/paginate/build/paginate.es5.min.js"></script>
 ```
 
-
 # Usage Guide
-
 
 ## `ProPaginate` Class
 
 ProPaginate class is to make the most modern pagination. This allows to make pagination for monthly data.
 
-
 ### `ProPaginate` Class Usage Example
-
 
 Here is the default creation of `ProPaginate`:
 
@@ -38,6 +37,7 @@ document.onreadystatechange = function () {
   }
 };
 ```
+
 You can do the customization and change the default settings providing the option object as parameter of `ProPaginate` class
 
 ```html
@@ -45,13 +45,308 @@ You can do the customization and change the default settings providing the optio
 ```
 
 ```javascript
+const dummyData = [
+    {
+      month: "jan",
+      data: [
+        {
+          _date: "Jan 20",
+          location: "Chattagram",
+        },
+      ],
+    },
+    {
+      month: "feb",
+      data: [
+        {
+          _date: "feb 20",
+          location: "Chattagram",
+        },
+      ],
+    },
+    {
+      month: "march",
+      data: [
+        {
+          _date: "march 12",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "apr",
+      data: [
+        {
+          _date: "apr 12",
+          location: "Dhaka",
+        },
+        {
+          _date: "apr 32",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "may",
+      data: [
+        {
+          _date: "may 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "may 25",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "jun",
+      data: [
+        {
+          _date: "jun 4",
+          location: "Dhaka",
+        },
+        {
+          _date: "jun 24",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "jul",
+      data: [
+        {
+          _date: "jul 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "jul 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "jul 25",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "aug",
+      data: [
+        {
+          _date: "aug 4",
+          location: "Dhaka",
+        },
+        {
+          _date: "aug 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "aug 11",
+          location: "Dhaka",
+        },
+        {
+          _date: "aug 13",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "sep",
+      data: [
+        {
+          _date: "sep 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "sep 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "sep 6",
+          location: "Dhaka",
+        },
+        {
+          _date: "sep 6",
+          location: "Dhaka",
+        },
+        {
+          _date: "sep 5",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "oct",
+      data: [
+        {
+          _date: "oct 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 23",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 13",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 23",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 3",
+          location: "Dhaka",
+        },
+        {
+          _date: "oct 13",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "nov",
+      data: [
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 22",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 22",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 22",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 22",
+          location: "Dhaka",
+        },
+        {
+          _date: "nov 2",
+          location: "Dhaka",
+        },
+      ],
+    },
+    {
+      month: "dec",
+      data: [
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 16",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 15",
+          location: "Dhaka",
+        },
+        {
+          _date: "dec 5",
+          location: "Dhaka",
+        },
+      ],
+    },
+  ];
+  
+let currentMonth = new Date().getMonth();
 document.onreadystatechange = function () {
   if (document.readyState === "complete") {
-    const example_1 = new ProPaginate({mainContainerSelector:"#paginate-2"});
+    const example_1 = new ProPaginate({
+      data: dummyData,
+      startpageNum: currentMonth,
+      pageLinkAreaLabel: [
+        "jan",
+        "feb",
+        "mar",
+        "apr",
+        "may",
+        "jun",
+        "jul",
+        "aug",
+        "sep",
+        "oct",
+        "nov",
+        "dec",
+      ],
+      dataItemHtml:
+        '<div class="data_item"><div class="data_item_details"><span class="data_item_date">${_date}</span><span class="data_item_location">${location}</span></div></div>',
+      dataItemsArrayPath: "data",
+    });
   }
 };
 ```
-
 
 ### Creation
 
@@ -59,21 +354,19 @@ document.onreadystatechange = function () {
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `new ProPaginate`(<Map options> options?) | Instantiates a ProPaginate object optionally given an object literal with ProPaginate options. |
 
-
 ### Options
 
-| Option                  | Type    | Default                                                                                                                                                               | Description                                                                                                                                 |
-| ----------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mainContainerSelector` | String  | `'#paginate'`                                                                                                                                                         | The pagination wrapper section selector. any kind of css selector is excapted but id is recomended as the value.                            |
-| `data`                  | Array   | `'this.#dummyData'`                                                                                                                                                   | Array containing all data to show and paginate.                                                                                             |
-| `dataItemsArrayPath`    | String  | `'data'`                                                                                                                                                              | Path from where the loop should be done in `data` array.                                                                                    |
-| `dataItemHtml`          | String  | `'<div class="data_item"><div class="data_item_details"><span class="data_item_date">${_date}</span><span class="data_item_location">${location}</span></div></div>'` | Html element to render as every page items. Please provide the property of the object like `_date`, `location` to show data on every items. |
-| `showAlldataOnce`       | Boolean | `false`                                                                                                                                                               | Determine all items should be shown once or not.                                                                                            |
-| `visibleDataonce`       | integer | `5`                                                                                                                                                                   | The number of items that will show at once.                                                                                                 |
-| `showMoreAreaLabel`     | String  | `'Show More'`                                                                                                                                                         | Area label for show more items button.                                                                                                      |
-| `showMoreClass`         | String  | `'show_more'`                                                                                                                                                                  | custom class for show more items button.                                                                                                    |
-
-
+| Option                  | Type    | Default             | Description                                                                                                                                 |
+| ----------------------- | ------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mainContainerSelector` | String  | `'#paginate'`       | The pagination wrapper section selector. any kind of css selector is excapted but id is recomended as the value.                            |
+| `data`                  | Array   | `'this.#dummyData'` | Array containing all data to show and paginate.                                                                                             |
+| `dataItemsArrayPath`    | String  | `'data'`            | Path from where the loop should be done in `data` array.                                                                                    |
+| `dataItemHtml`          | String  | `''`                | Html element to render as every page items. Please provide the property of the object like `_date`, `location` to show data on every items. |
+| `showAlldataOnce`       | Boolean | `false`             | Determine all items should be shown once or not.                                                                                            |
+| `visibleDataonce`       | integer | `5`                 | The number of items that will show at once.                                                                                                 |
+| `showMoreAreaLabel`     | String  | `'Show More'`       | Area label for show more items button.                                                                                                      |
+| `mainDataArrayEmptyErrorHtml`         | String  | `''`       | Html element to show when the Data Array is empty.                                                                                                    |
+| `singleDataItemArrayEmptyErrorHtml`         | String  | `''`       | Html element to show when a single item of the data Array is empty.                                                                                   |
 
 ### Options inherited from `Paginate` class
 
@@ -96,12 +389,10 @@ document.onreadystatechange = function () {
 | `showPrevNext`             | Boolean | `true`                                     | Determine if the previous and next controls will show or not.                                            |
 | `hasEllips`                | Boolean | `true`                                     | Determine if the less Ellips and more hasEllips will show or not.                                        |
 | `hideOnSmall`              | Boolean | `false`                                    | Determine if the pagination shows when the number of items is smaller than the number of items per page. |
-| `defaultClass`             | String  | `'defaultclass'`                                       | A class to apply to all control elements.                                                                |
+| `defaultClass`             | String  | `'defaultclass'`                           | A class to apply to all control elements.                                                                |
 | `activeClass`              | String  | `'active'`                                 | A class to apply to the active page link.                                                                |
 | `disabledClass`            | String  | `'disabled'`                               | A class to apply to disabled controls.                                                                   |
-|  `pageLinkAreaLabel`       |  Array  | `["jan", "feb", "mar", "apr","may","jun","jul","aug","sep","oct","nov","dec"]` | Array of text to show as arealabel of page links.
-
-
+| `pageLinkAreaLabel`        | Array   | `[]`                                       | Array of text to show as arealabel of page links.                                                        |
 
 ### Methods inherited from `Paginate` class
 

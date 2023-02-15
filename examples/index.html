@@ -63,16 +63,16 @@
     },
     {
       month: "apr",
-      // data: [
-      //   {
-      //     _date: "apr 12",
-      //     location: "Dhaka",
-      //   },
-      //   {
-      //     _date: "apr 32",
-      //     location: "Dhaka",
-      //   },
-      // ],
+      data: [
+        {
+          _date: "apr 12",
+          location: "Dhaka",
+        },
+        {
+          _date: "apr 32",
+          location: "Dhaka",
+        },
+      ],
     },
     {
       month: "may",
@@ -312,6 +312,7 @@
         if (document.readyState === "complete") {
           const example_1 = new ProPaginate({
             data:dummyData,
+            startpageNum:currentMonth,
             pageLinkAreaLabel:["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"],
             dataItemHtml: '<div class="data_item"><div class="data_item_details"><span class="data_item_date">${_date}</span><span class="data_item_location">${location}</span></div></div>',
             dataItemsArrayPath: "data",
