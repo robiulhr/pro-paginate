@@ -11,7 +11,7 @@ To start using it straight away, place this in the head of your HTML code:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/robiulhr/paginate/src/style/style.min.css"
+  href="https://cdn.jsdelivr.net/gh/robiulhr/paginate/src/style/style.css"
 />
 <script src="https://cdn.jsdelivr.net/gh/robiulhr/paginate/build/paginate.es5.js"></script>
 ```
