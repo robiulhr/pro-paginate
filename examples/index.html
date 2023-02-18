@@ -315,7 +315,7 @@
             data:dummyData,
             startpageNum:0,
             pageLinkAreaLabel:["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"],
-            dataItemHtml: '<div class="data_item"><div class="data_item_details"><span class="data_item_date">${_date}</span><span class="data_item_location">${location}</span></div></div>',
+            dataItemHtml: '<div class="data_item"><div class="data_item_details"><span class="data_item_date">${ _date_paginate == "Jan 20" ? "hello" : "hello world"}</span><span class="data_item_location">${location_paginate}</span></div></div>',
             dataItemsArrayPath: "data",
           });
         }
