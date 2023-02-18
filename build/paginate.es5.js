@@ -537,9 +537,16 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     key: "_stringToTamplateGet",
     value: function _stringToTamplateGet(path, obj) {
       var fb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "${".concat(path, "}");
-      return path.split('.').reduce(function (res, key) {
-        return res[key] || fb;
-      }, obj);
+      for (var item in obj) {
+        window[item + '_paginate'] = obj[item];
+      }
+      if (window.hasOwnProperty(eval(path))) {
+        return path.split('.').reduce(function (res, key) {
+          return res[key] || fb;
+        }, obj);
+      } else {
+        return eval(path);
+      }
     }
   }, {
     key: "_stringToTamplateParser",

@@ -643,9 +643,6 @@ class ProPaginate extends Paginate {
     }    
   }
   _stringToTamplateParser (template, map, fallback) {
-    // console.log(template,"template")
-    // console.log(map,"map")
-    // console.log(fallback,"fallback")
     return template.replace(/\$\{.+?}/g, match => {
       const path = match.substr(2, match.length - 3).trim()
       return this._stringToTamplateGet(path, map, fallback)
