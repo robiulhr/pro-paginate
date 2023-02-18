@@ -11,11 +11,10 @@ To start using it straight away, place this in the head of your HTML code:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/robiulhr/paginate/src/style/style.css"
+  href="https://cdn.jsdelivr.net/npm/pro-paginate@1.0.1/src/style/style.css"
 />
-<script src="https://cdn.jsdelivr.net/gh/robiulhr/paginate/build/paginate.es5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pro-paginate@1.0.1/build/paginate.es5.js"></script>
 ```
-
 # Usage Guide
 
 ## `ProPaginate` Class
@@ -372,7 +371,7 @@ document.onreadystatechange = function () {
 ### Options inherited from `Paginate` class
 
 | Option                     | Type    | Default                                    | Description                                                                                              |
-| -------------------------- | ------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- | --- |
+| -------------------------- | ------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- | 
 | `itemsContainerClass`      | String  | `'.items_container'`                       | The items' container custom class.                                                                       |
 | `paginationSelector`       | String  | `'.pagination'`                            | The pagination' container selector. can be any valid css selector.                                       |
 | `paginationContainerClass` | String  | `'.pagination_container'`                  | The pagination container custom class.                                                                   |
