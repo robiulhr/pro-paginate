@@ -633,19 +633,12 @@ class ProPaginate extends Paginate {
   }
 
   _stringToTamplateGet (path, obj, fb = `$\{${path}}`) {
-    for (let item in obj) {
-      window[item + '_paginate'] = obj[item] 
-    }
-    if(window.hasOwnProperty(eval(path))){ 
-      return path.split('.').reduce((res, key) =>  res[key] || fb, obj);
-    }else{
-      return eval(path);
-    }    
+      return path.split('.').reduce((res, key) =>  res[key]  || fb, obj);
   }
-  _stringToTamplateParser (template, map, fallback) {
+  _stringToTamplateParser (template, paginateDataObj) {
     return template.replace(/\$\{.+?}/g, match => {
       const path = match.substr(2, match.length - 3).trim()
-      return this._stringToTamplateGet(path, map, fallback)
+      return this._stringToTamplateGet(path, paginateDataObj, eval(path));
     })
   }
 

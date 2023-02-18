@@ -537,24 +537,17 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     key: "_stringToTamplateGet",
     value: function _stringToTamplateGet(path, obj) {
       var fb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "${".concat(path, "}");
-      for (var item in obj) {
-        window[item + '_paginate'] = obj[item];
-      }
-      if (window.hasOwnProperty(eval(path))) {
-        return path.split('.').reduce(function (res, key) {
-          return res[key] || fb;
-        }, obj);
-      } else {
-        return eval(path);
-      }
+      return path.split('.').reduce(function (res, key) {
+        return res[key] || fb;
+      }, obj);
     }
   }, {
     key: "_stringToTamplateParser",
-    value: function _stringToTamplateParser(template, map, fallback) {
+    value: function _stringToTamplateParser(template, paginateDataObj) {
       var _this3 = this;
       return template.replace(/\$\{.+?}/g, function (match) {
         var path = match.substr(2, match.length - 3).trim();
-        return _this3._stringToTamplateGet(path, map, fallback);
+        return _this3._stringToTamplateGet(path, paginateDataObj, eval(path));
       });
     }
   }, {

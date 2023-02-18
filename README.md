@@ -32,10 +32,10 @@ Here is the default creation of `ProPaginate`:
 
 ```javascript
 document.onreadystatechange = function () {
-  if (document.readyState === "complete") {
-    const example_1 = new ProPaginate();
+  if (document.readyState === 'complete') {
+    const example_1 = new ProPaginate()
   }
-};
+}
 ```
 
 You can do the customization and change the default settings providing the option object as parameter of `ProPaginate` class
@@ -46,306 +46,307 @@ You can do the customization and change the default settings providing the optio
 
 ```javascript
 const dummyData = [
-    {
-      month: "jan",
-      data: [
-        {
-          _date: "Jan 20",
-          location: "Chattagram",
-        },
-      ],
-    },
-    {
-      month: "feb",
-      data: [
-        {
-          _date: "feb 20",
-          location: "Chattagram",
-        },
-      ],
-    },
-    {
-      month: "march",
-      data: [
-        {
-          _date: "march 12",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "apr",
-      data: [
-        {
-          _date: "apr 12",
-          location: "Dhaka",
-        },
-        {
-          _date: "apr 32",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "may",
-      data: [
-        {
-          _date: "may 5",
-          location: "Dhaka",
-        },
-        {
-          _date: "may 25",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "jun",
-      data: [
-        {
-          _date: "jun 4",
-          location: "Dhaka",
-        },
-        {
-          _date: "jun 24",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "jul",
-      data: [
-        {
-          _date: "jul 5",
-          location: "Dhaka",
-        },
-        {
-          _date: "jul 3",
-          location: "Dhaka",
-        },
-        {
-          _date: "jul 25",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "aug",
-      data: [
-        {
-          _date: "aug 4",
-          location: "Dhaka",
-        },
-        {
-          _date: "aug 3",
-          location: "Dhaka",
-        },
-        {
-          _date: "aug 11",
-          location: "Dhaka",
-        },
-        {
-          _date: "aug 13",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "sep",
-      data: [
-        {
-          _date: "sep 3",
-          location: "Dhaka",
-        },
-        {
-          _date: "sep 2",
-          location: "Dhaka",
-        },
-        {
-          _date: "sep 6",
-          location: "Dhaka",
-        },
-        {
-          _date: "sep 6",
-          location: "Dhaka",
-        },
-        {
-          _date: "sep 5",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "oct",
-      data: [
-        {
-          _date: "oct 3",
-          location: "Dhaka",
-        },
-        {
-          _date: "oct 23",
-          location: "Dhaka",
-        },
-        {
-          _date: "oct 13",
-          location: "Dhaka",
-        },
-        {
-          _date: "oct 23",
-          location: "Dhaka",
-        },
-        {
-          _date: "oct 3",
-          location: "Dhaka",
-        },
-        {
-          _date: "oct 13",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "nov",
-      data: [
-        {
-          _date: "nov 2",
-          location: "Dhaka",
-        },
-        {
-          _date: "nov 2",
-          location: "Dhaka",
-        },
-        {
-          _date: "nov 22",
-          location: "Dhaka",
-        },
-        {
-          _date: "nov 2",
-          location: "Dhaka",
-        },
-        {
-          _date: "nov 22",
-          location: "Dhaka",
-        },
-        {
-          _date: "nov 22",
-          location: "Dhaka",
-        },
-        {
-          _date: "nov 2",
-          location: "Dhaka",
-        },
-        {
-          _date: "nov 22",
-          location: "Dhaka",
-        },
-        {
-          _date: "nov 2",
-          location: "Dhaka",
-        },
-      ],
-    },
-    {
-      month: "dec",
-      data: [
-        {
-          _date: "dec 5",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 15",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 16",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 5",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 15",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 16",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 5",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 15",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 5",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 16",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 15",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 16",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 16",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 15",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 5",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 15",
-          location: "Dhaka",
-        },
-        {
-          _date: "dec 5",
-          location: "Dhaka",
-        },
-      ],
-    },
-  ];
-  
-let currentMonth = new Date().getMonth();
+  {
+    month: 'jan',
+    data: [
+      {
+        _date: 'Jan 20',
+        location: 'Chattagram'
+      }
+    ]
+  },
+  {
+    month: 'feb',
+    data: [
+      {
+        _date: 'feb 20',
+        location: 'Chattagram'
+      }
+    ]
+  },
+  {
+    month: 'march',
+    data: [
+      {
+        _date: 'march 12',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'apr',
+    data: [
+      {
+        _date: 'apr 12',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'apr 32',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'may',
+    data: [
+      {
+        _date: 'may 5',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'may 25',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'jun',
+    data: [
+      {
+        _date: 'jun 4',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'jun 24',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'jul',
+    data: [
+      {
+        _date: 'jul 5',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'jul 3',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'jul 25',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'aug',
+    data: [
+      {
+        _date: 'aug 4',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'aug 3',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'aug 11',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'aug 13',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'sep',
+    data: [
+      {
+        _date: 'sep 3',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'sep 2',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'sep 6',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'sep 6',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'sep 5',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'oct',
+    data: [
+      {
+        _date: 'oct 3',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'oct 23',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'oct 13',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'oct 23',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'oct 3',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'oct 13',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'nov',
+    data: [
+      {
+        _date: 'nov 2',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'nov 2',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'nov 22',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'nov 2',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'nov 22',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'nov 22',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'nov 2',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'nov 22',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'nov 2',
+        location: 'Dhaka'
+      }
+    ]
+  },
+  {
+    month: 'dec',
+    data: [
+      {
+        _date: 'dec 5',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 15',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 16',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 5',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 15',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 16',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 5',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 15',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 5',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 16',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 15',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 16',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 16',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 15',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 5',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 15',
+        location: 'Dhaka'
+      },
+      {
+        _date: 'dec 5',
+        location: 'Dhaka'
+      }
+    ]
+  }
+]
+
+let currentMonth = new Date().getMonth()
 document.onreadystatechange = function () {
-  if (document.readyState === "complete") {
+  if (document.readyState === 'complete') {
     const example_1 = new ProPaginate({
       data: dummyData,
       startpageNum: currentMonth,
       pageLinkAreaLabel: [
-        "jan",
-        "feb",
-        "mar",
-        "apr",
-        "may",
-        "jun",
-        "jul",
-        "aug",
-        "sep",
-        "oct",
-        "nov",
-        "dec",
+        'jan',
+        'feb',
+        'mar',
+        'apr',
+        'may',
+        'jun',
+        'jul',
+        'aug',
+        'sep',
+        'oct',
+        'nov',
+        'dec'
       ],
       dataItemHtml:
-        '<div class="data_item"><div class="data_item_details"><span class="data_item_date">${_date}</span><span class="data_item_location">${location}</span></div></div>',
-      dataItemsArrayPath: "data",
-    });
+        '<div class="data_item"><div class="data_item_details"><span class="data_item_date">${paginateDataObj._date == "Jan 20" ? "hello" : "hello world"}</span><span class="data_item_location">${paginateDataObj.location}</span></div></div>',
+
+      dataItemsArrayPath: 'data'
+    })
   }
-};
+}
 ```
 
 ### Creation
@@ -356,24 +357,22 @@ document.onreadystatechange = function () {
 
 ### Options
 
-| Option                  | Type    | Default             | Description                                                                                                                                 |
-| ----------------------- | ------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mainContainerSelector` | String  | `'#paginate'`       | The pagination wrapper section selector. any kind of css selector is excapted but id is recomended as the value.                            |
-| `data`                  | Array   | `'this.#dummyData'` | Array containing all data to show and paginate.                                                                                             |
-| `dataItemsArrayPath`    | String  | `'data'`            | Path from where the loop should be done in `data` array.                                                                                    |
-| `dataItemHtml`          | String  | `''`                | Html element to render as every page items. Please provide the property of the object like `_date`, `location` to show data on every items. |
-| `showAlldataOnce`       | Boolean | `false`             | Determine all items should be shown once or not.                                                                                            |
-| `visibleDataonce`       | integer | `5`                 | The number of items that will show at once.                                                                                                 |
-| `showMoreAreaLabel`     | String  | `'Show More'`       | Area label for show more items button.                                                                                                      |
-| `mainDataArrayEmptyErrorHtml`         | String  | `''`       | Html element to show when the Data Array is empty.                                                                                                    |
-| `singleDataItemArrayEmptyErrorHtml`         | String  | `''`       | Html element to show when a single item of the data Array is empty.                                                                                   |
-
-
+| Option                              | Type    | Default             | Description                                                                                                                                 |
+| ----------------------------------- | ------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mainContainerSelector`             | String  | `'#paginate'`       | The pagination wrapper section selector. any kind of css selector is excapted but id is recomended as the value.                            |
+| `data`                              | Array   | `'this.#dummyData'` | Array containing all data to show and paginate.                                                                                             |
+| `dataItemsArrayPath`                | String  | `'data'`            | Path from where the loop should be done in `data` array.                                                                                    |
+| `dataItemHtml`                      | String  | `''`                | Html element to render as every page items. Please provide the property of the object like `_date`, `location` to show data on every items. |
+| `showAlldataOnce`                   | Boolean | `false`             | Determine all items should be shown once or not.                                                                                            |
+| `visibleDataonce`                   | integer | `5`                 | The number of items that will show at once.                                                                                                 |
+| `showMoreAreaLabel`                 | String  | `'Show More'`       | Area label for show more items button.                                                                                                      |
+| `mainDataArrayEmptyErrorHtml`       | String  | `''`                | Html element to show when the Data Array is empty.                                                                                          |
+| `singleDataItemArrayEmptyErrorHtml` | String  | `''`                | Html element to show when a single item of the data Array is empty.                                                                         |
 
 ### Options inherited from `Paginate` class
 
 | Option                     | Type    | Default                                    | Description                                                                                              |
-| -------------------------- | ------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| -------------------------- | ------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- | --- |
 | `itemsContainerClass`      | String  | `'.items_container'`                       | The items' container custom class.                                                                       |
 | `paginationSelector`       | String  | `'.pagination'`                            | The pagination' container selector. can be any valid css selector.                                       |
 | `paginationContainerClass` | String  | `'.pagination_container'`                  | The pagination container custom class.                                                                   |
@@ -398,18 +397,16 @@ document.onreadystatechange = function () {
 
 ### Methods inherited from `Paginate` class
 
-| Method            | Type     | Default | Description                                  |
-| ----------------- | -------- | ------- | -------------------------------------------- |
-| `onPageDisplayed` | Function | false   | Callback to be run once a page is displayed. |
-| `onLinkClick` | Function | false   | Callback to be run once the user click on any specific page link. |
-| `onFirstClick` | Function | false   | Callback to be run once the user click on the first link. |
-| `onLastClick` | Function | false   | Callback to be run once the user click on the last link.  |
-| `onPrevClick` | Function | false   | Callback to be run once the user click on the prev link. |
-| `onNextClick` | Function | false   | Callback to be run once the user click on the next link.  |
-| `onMoreClick` | Function | false   | Callback to be run once the user click on the more link. |
-| `onLessClick` | Function | false   | Callback to be run once the user click on the less link.  |
-
-
+| Method            | Type     | Default | Description                                                       |
+| ----------------- | -------- | ------- | ----------------------------------------------------------------- |
+| `onPageDisplayed` | Function | false   | Callback to be run once a page is displayed.                      |
+| `onLinkClick`     | Function | false   | Callback to be run once the user click on any specific page link. |
+| `onFirstClick`    | Function | false   | Callback to be run once the user click on the first link.         |
+| `onLastClick`     | Function | false   | Callback to be run once the user click on the last link.          |
+| `onPrevClick`     | Function | false   | Callback to be run once the user click on the prev link.          |
+| `onNextClick`     | Function | false   | Callback to be run once the user click on the next link.          |
+| `onMoreClick`     | Function | false   | Callback to be run once the user click on the more link.          |
+| `onLessClick`     | Function | false   | Callback to be run once the user click on the less link.          |
 
 ## Browser Support
 
