@@ -15,6 +15,18 @@ To start using it straight away, place this in the head of your HTML code:
 />
 <script src="https://cdn.jsdelivr.net/npm/pro-paginate@1.0.1/build/paginate.es5.js"></script>
 ```
+
+
+Using a JavaScript package manager
+
+If you use the npm package manager, you can fetch a local copy of pro-paginate by running:
+
+```javascript
+npm install pro-paginate
+```
+
+You will find a copy of the pro-paginate release files in node_modules/pro-paginate/src.
+
 # Usage Guide
 
 ## `ProPaginate` Class
