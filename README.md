@@ -418,6 +418,8 @@ document.onreadystatechange = function () {
 | `onNextClick`     | Function | false   | Callback to be run once the user click on the next link.          |
 | `onMoreClick`     | Function | false   | Callback to be run once the user click on the more link.          |
 | `onLessClick`     | Function | false   | Callback to be run once the user click on the less link.          |
+| `onDataUpdate`     | Function | false   | Callback to be run once the data has been updated.          |
+| `onUpdatedDataRander`     | Function | false   | Callback to be run once the data has been randered.          |
 
 ## Browser Support
 

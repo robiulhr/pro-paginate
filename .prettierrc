@@ -1,4 +1,14 @@
 {
-  "tabWidth": 2,
-  "useTabs": false
+  "overrides": [
+    {
+      "files": "./src/*.js",
+      "options": {
+        "tabWidth": 2,
+        "useTabs": false,
+        "proseWrap": "never",
+        "printWidth": 200,
+        "formatOnSave": true
+      }
+    }
+  ]
 }
