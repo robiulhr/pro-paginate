@@ -24,26 +24,26 @@ var Paginate = /*#__PURE__*/function () {
   function Paginate() {
     _classCallCheck(this, Paginate);
     this.defaults = {
-      itemsContainerClass: '.items_container',
-      paginationContainerClass: '.pagination_container',
-      itemsView: 'row_view',
+      itemsContainerClass: ".items_container",
+      paginationContainerClass: ".pagination_container",
+      itemsView: "row_view",
       // row_view || column_view
       wrapAround: true,
       showPrevNext: true,
       showFirstLast: true,
-      defaultClass: 'defaultclass',
-      firstAreaLabel: 'First',
-      prevAreaLabel: 'Prev',
-      nextAreaLabel: 'Next',
-      lastAreaLabel: 'Last',
+      defaultClass: "defaultclass",
+      firstAreaLabel: "First",
+      prevAreaLabel: "Prev",
+      nextAreaLabel: "Next",
+      lastAreaLabel: "Last",
       pageLinkAreaLabel: [],
       hasEllips: true,
-      paginationOrder: ['first', 'prev', 'num', 'next', 'last'],
-      paginationSelector: '.pagination',
+      paginationOrder: ["first", "prev", "num", "next", "last"],
+      paginationSelector: ".pagination",
       startpageNum: 0,
       visiblePageCount: 4,
-      activeClass: 'active',
-      disabledClass: 'disabled',
+      activeClass: "active",
+      disabledClass: "disabled",
       onLinkClick: function onLinkClick(event) {},
       onFirstClick: function onFirstClick(event) {},
       onLastClick: function onLastClick(event) {},
@@ -68,14 +68,14 @@ var Paginate = /*#__PURE__*/function () {
     key: "_optionsHandler",
     value: function _optionsHandler(options) {
       // checking the provided options value
-      if (_typeof(options) === 'object' && !Array.isArray(options) && options !== null) {
+      if (_typeof(options) === "object" && !Array.isArray(options) && options !== null) {
         Object.assign(this.defaults, options);
-      } else if (typeof options === 'undefined') {
-        console.group('%c Suggestion for Paginate javascript Library', 'color: black; background-color: #D6995B;padding: 5px;font-size:20px');
-        console.log("%c It Seems like you haven't provided the options object. \n If you want to change the default settings Please provide a Option object providing your disire settings on it as properties. \n Like below:\n var example_1 = new Paginate({\n containerSelector: '.example_1 .items', \n itemSelector: '.example_1 .items > div', \n navigationSelector: '.example_1 .page_navigation', \n itemsPerPage: 3 \n })", 'padding:10px');
+      } else if (typeof options === "undefined") {
+        console.group("%c Suggestion for Paginate javascript Library", "color: black; background-color: #D6995B;padding: 5px;font-size:20px");
+        console.log("%c It Seems like you haven't provided the options object. \n If you want to change the default settings Please provide a Option object providing your disire settings on it as properties. \n Like below:\n var example_1 = new Paginate({\n containerSelector: '.example_1 .items', \n itemSelector: '.example_1 .items > div', \n navigationSelector: '.example_1 .page_navigation', \n itemsPerPage: 3 \n })", "padding:10px");
         console.groupEnd();
       } else {
-        throw Error('Your provided value as Option must be an Object.');
+        throw Error("Your provided value as Option must be an Object.");
       }
     }
     // check the validity of provided element selector
@@ -106,10 +106,10 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_checkElementOverflows",
     value: function _checkElementOverflows(element) {
-      if (element.classList.contains('row_view')) {
+      if (element.classList.contains("row_view")) {
         if (element.offsetWidth < element.scrollWidth) return true;
         return false;
-      } else if (element.classList.contains('column_view')) {
+      } else if (element.classList.contains("column_view")) {
         if (element.offsetHeight < element.scrollHeight) return true;
         return false;
       }
@@ -122,9 +122,9 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_pageItemsHorizontalScroll",
     value: function _pageItemsHorizontalScroll(container) {
-      if (container.classList.contains('row_view')) {
+      if (container.classList.contains("row_view")) {
         var that = this;
-        container.addEventListener('wheel', that._pageItemsHorizontalScrollEventCallback, {
+        container.addEventListener("wheel", that._pageItemsHorizontalScrollEventCallback, {
           passive: true
         });
       }
@@ -132,9 +132,9 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_removePageItemsHorizontalScroll",
     value: function _removePageItemsHorizontalScroll(container) {
-      if (container.classList.contains('row_view')) {
+      if (container.classList.contains("row_view")) {
         var that = this;
-        container.removeEventListener('wheel', that._pageItemsHorizontalScrollEventCallback);
+        container.removeEventListener("wheel", that._pageItemsHorizontalScrollEventCallback);
       }
     }
   }, {
@@ -151,43 +151,43 @@ var Paginate = /*#__PURE__*/function () {
           startClintX: e.clientX,
           startClintY: e.clientY
         };
-        container.addEventListener('mousemove', mouseMoveHandler);
-        container.addEventListener('mouseup', mouseUpHandler);
+        container.addEventListener("mousemove", mouseMoveHandler);
+        container.addEventListener("mouseup", mouseUpHandler);
       };
       var mouseMoveHandler = function mouseMoveHandler(e) {
         e.preventDefault();
-        container.style.cursor = 'grabbing';
-        container.style.userSelect = 'none';
+        container.style.cursor = "grabbing";
+        container.style.userSelect = "none";
         // How far the mouse has been moved
         var mouseMoveX = e.clientX - startPossition.startClintX;
         var mouseMoveY = e.clientY - startPossition.startClintY;
         // scroll the div
-        container.classList.contains('column_view') ? container.scrollTop -= 3 * mouseMoveY : '';
-        container.classList.contains('row_view') ? container.scrollLeft -= 3 * mouseMoveX : '';
+        container.classList.contains("column_view") ? container.scrollTop -= 3 * mouseMoveY : "";
+        container.classList.contains("row_view") ? container.scrollLeft -= 3 * mouseMoveX : "";
       };
       var mouseUpHandler = function mouseUpHandler(e) {
         e.preventDefault();
-        container.removeEventListener('mousemove', mouseMoveHandler);
-        container.removeEventListener('mouseup', mouseUpHandler);
-        container.style.cursor = 'grab';
-        container.style.removeProperty('user-select');
+        container.removeEventListener("mousemove", mouseMoveHandler);
+        container.removeEventListener("mouseup", mouseUpHandler);
+        container.style.cursor = "grab";
+        container.style.removeProperty("user-select");
       };
-      container.addEventListener('mousedown', this._mouseDownHandler);
+      container.addEventListener("mousedown", this._mouseDownHandler);
     }
   }, {
     key: "_removePageItemsTouchScrollEvent",
     value: function _removePageItemsTouchScrollEvent(container) {
-      container.removeEventListener('mousedown', this._mouseDownHandler);
+      container.removeEventListener("mousedown", this._mouseDownHandler);
     }
   }, {
     key: "_handlePageScrollandTouchScrollDependingOverflows",
     value: function _handlePageScrollandTouchScrollDependingOverflows(container) {
       if (this._checkElementOverflows(container)) {
-        container.style.justifyContent = 'flex-start';
+        container.style.justifyContent = "flex-start";
         this._pageItemsHorizontalScroll(container);
         this._pageItemsTouchScroll(container);
       } else {
-        container.style.justifyContent = 'center';
+        container.style.justifyContent = "center";
         this._removePageItemsHorizontalScroll(container);
         this._removePageItemsTouchScrollEvent(container);
       }
@@ -198,57 +198,57 @@ var Paginate = /*#__PURE__*/function () {
       var paginateWrapper = '<div class="paginate_wrapper">';
       paginateWrapper += "<div class=\"items_container ".concat(this.defaults.itemsView, "\"> </div>");
       // createPagination section
-      var more = this.defaults.hasEllips ? "<li class=\"pagination_item ellipse more\"><span>...</span></li>" : '';
-      var less = this.defaults.hasEllips ? "<li class=\"pagination_item ellipse less\"><span>...</span></li>" : '';
-      var first = !this.defaults.showFirstLast ? '' : "<li class=\"pagination_item paginaiton_first ".concat(this.defaults.defaultClass, "\"><a href=\"\" aria-label=\"").concat(this.defaults.firstAreaLabel, "\" onclick=\"return false;\">").concat(this.defaults.firstAreaLabel, "</a></li>");
-      var last = !this.defaults.showFirstLast ? '' : "<li class=\"pagination_item paginaiton_last ".concat(this.defaults.defaultClass, "\"><a href=\"\" aria-label=\"").concat(this.defaults.lastAreaLabel, "\" onclick=\"return false;\">").concat(this.defaults.lastAreaLabel, "</a></li>");
-      var previous = !this.defaults.showPrevNext ? '' : "<li class=\"pagination_item paginaiton_prev ".concat(this.defaults.defaultClass, "\"><a href=\"\" aria-label=\"").concat(this.defaults.prevAreaLabel, "\" onclick=\"return false;\">").concat(this.defaults.prevAreaLabel, "</a></li>");
-      var next = !this.defaults.showPrevNext ? '' : "<li class=\"pagination_item paginaiton_next ".concat(this.defaults.defaultClass, "\"><a href=\"\" aria-label=\"").concat(this.defaults.nextAreaLabel, "\" onclick=\"return false;\">").concat(this.defaults.nextAreaLabel, "</a></li>");
+      var more = this.defaults.hasEllips ? "<li class=\"pagination_item ellipse more\"><span>...</span></li>" : "";
+      var less = this.defaults.hasEllips ? "<li class=\"pagination_item ellipse less\"><span>...</span></li>" : "";
+      var first = !this.defaults.showFirstLast ? "" : "<li class=\"pagination_item paginaiton_first ".concat(this.defaults.defaultClass, "\"><a href=\"\" aria-label=\"").concat(this.defaults.firstAreaLabel, "\" onclick=\"return false;\">").concat(this.defaults.firstAreaLabel, "</a></li>");
+      var last = !this.defaults.showFirstLast ? "" : "<li class=\"pagination_item paginaiton_last ".concat(this.defaults.defaultClass, "\"><a href=\"\" aria-label=\"").concat(this.defaults.lastAreaLabel, "\" onclick=\"return false;\">").concat(this.defaults.lastAreaLabel, "</a></li>");
+      var previous = !this.defaults.showPrevNext ? "" : "<li class=\"pagination_item paginaiton_prev ".concat(this.defaults.defaultClass, "\"><a href=\"\" aria-label=\"").concat(this.defaults.prevAreaLabel, "\" onclick=\"return false;\">").concat(this.defaults.prevAreaLabel, "</a></li>");
+      var next = !this.defaults.showPrevNext ? "" : "<li class=\"pagination_item paginaiton_next ".concat(this.defaults.defaultClass, "\"><a href=\"\" aria-label=\"").concat(this.defaults.nextAreaLabel, "\" onclick=\"return false;\">").concat(this.defaults.nextAreaLabel, "</a></li>");
       var paginationContainer = " <div id=\"pagination_container\"><ul class=\"pagination_wrapper\">";
       this.defaults.paginationOrder.forEach(function (element) {
         switch (element) {
-          case 'first':
-            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += first : '';
+          case "first":
+            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += first : "";
             break;
-          case 'prev':
-            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += previous : '';
+          case "prev":
+            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += previous : "";
             break;
-          case 'next':
-            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += next : '';
+          case "next":
+            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += next : "";
             break;
-          case 'last':
-            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += last : '';
+          case "last":
+            this.pageCount > this.defaults.visiblePageCount ? paginationContainer += last : "";
             break;
-          case 'num':
-            this.defaults.hasEllips ? this.pageCount > this.defaults.visiblePageCount ? paginationContainer += less : '' : '';
+          case "num":
+            this.defaults.hasEllips ? this.pageCount > this.defaults.visiblePageCount ? paginationContainer += less : "" : "";
             if (this.pageCount > 1) {
               var count = 0;
               while (count <= this.pageCount - 1) {
-                var currentLink = '';
+                var currentLink = "";
                 switch (count) {
                   case 0:
-                    currentLink = 'first_num_link';
+                    currentLink = "first_num_link";
                     break;
                   case this.pageCount - 1:
-                    currentLink = 'last_num_link';
+                    currentLink = "last_num_link";
                     break;
                 }
                 paginationContainer += "<li class=\"pagination_item ".concat(this.defaults.defaultClass, " data-item ").concat(currentLink, "\" aria-label=\"").concat(count, "\"><a href=\"#\" onclick=\"return false\">").concat(Array.isArray(this.defaults.pageLinkAreaLabel) ? this.defaults.pageLinkAreaLabel[count] || count + 1 : count + 1, "</a></li>");
                 count++;
               }
             }
-            this.defaults.hasEllips ? this.pageCount > this.defaults.visiblePageCount ? paginationContainer += more : '' : '';
+            this.defaults.hasEllips ? this.pageCount > this.defaults.visiblePageCount ? paginationContainer += more : "" : "";
             break;
         }
       }, this);
-      return paginateWrapper + (paginationContainer + "</ul></div>") + '</div>';
+      return paginateWrapper + (paginationContainer + "</ul></div>") + "</div>";
     }
   }, {
     key: "_hideAllShowSpecificPaginationItems",
     value: function _hideAllShowSpecificPaginationItems(allEle) {
       if (this.pageCount > this.defaults.visiblePageCount) {
         allEle.forEach(function (item, ind) {
-          if (ind < this.defaults.startpageNum || ind > this.defaults.startpageNum + (this.defaults.visiblePageCount - 1)) item.style.display = 'none';else item.style.display = 'list-item';
+          if (ind < this.defaults.startpageNum || ind > this.defaults.startpageNum + (this.defaults.visiblePageCount - 1)) item.style.display = "none";else item.style.display = "list-item";
         }, this);
       }
     }
@@ -258,32 +258,32 @@ var Paginate = /*#__PURE__*/function () {
       // handle less ellipse
       if (this.pageCount > this.defaults.visiblePageCount) {
         if (this._currentPage <= this.defaults.visiblePageCount - 1) {
-          this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.less').classList.add(this.defaults.disabledClass);
+          this._selectSingleElement(".paginate_wrapper .pagination_item.ellipse.less").classList.add(this.defaults.disabledClass);
         } else {
-          this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.less').classList.remove(this.defaults.disabledClass);
+          this._selectSingleElement(".paginate_wrapper .pagination_item.ellipse.less").classList.remove(this.defaults.disabledClass);
         }
         // handle less ellipse
         if (this._currentPage >= this.pageCount - 1 - this.defaults.visiblePageCount) {
-          this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.more').classList.add(this.defaults.disabledClass);
+          this._selectSingleElement(".paginate_wrapper .pagination_item.ellipse.more").classList.add(this.defaults.disabledClass);
         } else {
-          this._selectSingleElement('.paginate_wrapper .pagination_item.ellipse.more').classList.remove(this.defaults.disabledClass);
+          this._selectSingleElement(".paginate_wrapper .pagination_item.ellipse.more").classList.remove(this.defaults.disabledClass);
         }
         if (!this.defaults.wrapAround) {
           // handle prev and first button
           if (this._currentPage <= 0) {
-            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_prev').classList.add(this.defaults.disabledClass);
-            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_first').classList.add(this.defaults.disabledClass);
+            this._selectSingleElement(".paginate_wrapper .pagination_item.paginaiton_prev").classList.add(this.defaults.disabledClass);
+            this._selectSingleElement(".paginate_wrapper .pagination_item.paginaiton_first").classList.add(this.defaults.disabledClass);
           } else {
-            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_prev').classList.remove(this.defaults.disabledClass);
-            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_first').classList.remove(this.defaults.disabledClass);
+            this._selectSingleElement(".paginate_wrapper .pagination_item.paginaiton_prev").classList.remove(this.defaults.disabledClass);
+            this._selectSingleElement(".paginate_wrapper .pagination_item.paginaiton_first").classList.remove(this.defaults.disabledClass);
           }
           // handle next and last button
           if (this._currentPage >= this.pageCount - 1) {
-            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_next').classList.add(this.defaults.disabledClass);
-            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_last').classList.add(this.defaults.disabledClass);
+            this._selectSingleElement(".paginate_wrapper .pagination_item.paginaiton_next").classList.add(this.defaults.disabledClass);
+            this._selectSingleElement(".paginate_wrapper .pagination_item.paginaiton_last").classList.add(this.defaults.disabledClass);
           } else {
-            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_next').classList.remove(this.defaults.disabledClass);
-            this._selectSingleElement('.paginate_wrapper .pagination_item.paginaiton_last').classList.remove(this.defaults.disabledClass);
+            this._selectSingleElement(".paginate_wrapper .pagination_item.paginaiton_next").classList.remove(this.defaults.disabledClass);
+            this._selectSingleElement(".paginate_wrapper .pagination_item.paginaiton_last").classList.remove(this.defaults.disabledClass);
           }
         }
       }
@@ -298,10 +298,10 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_firstClickHandler",
     value: function _firstClickHandler(allItems, container) {
-      var firstLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_first');
+      var firstLink = this._selectSingleElement(".pagination_wrapper .pagination_item.paginaiton_first");
       if (!firstLink.classList.contains(this.defaults.disabledClass)) {
         var that = this;
-        firstLink.addEventListener('click', function (event) {
+        firstLink.addEventListener("click", function (event) {
           // call the custom first function
           that.defaults.onFirstClick.call(that, event);
           that._currentPage = 0;
@@ -318,10 +318,10 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_prevClickHandler",
     value: function _prevClickHandler(allItems, container) {
-      var prevLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_prev');
+      var prevLink = this._selectSingleElement(".pagination_wrapper .pagination_item.paginaiton_prev");
       if (!prevLink.classList.contains(this.defaults.disabledClass)) {
         var that = this;
-        prevLink.addEventListener('click', function (event) {
+        prevLink.addEventListener("click", function (event) {
           // call the prev custom function
           that.defaults.onPrevClick.call(that, event);
           if (that._currentPage < that.pageCount && that._currentPage >= 1) {
@@ -349,10 +349,10 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_ellipseMoreClickHandler",
     value: function _ellipseMoreClickHandler(allItems, container) {
-      var ellipseMore = this._selectSingleElement('.pagination_wrapper .pagination_item.ellipse.more');
+      var ellipseMore = this._selectSingleElement(".pagination_wrapper .pagination_item.ellipse.more");
       if (!ellipseMore.classList.contains(this.defaults.disabledClass)) {
         var that = this;
-        ellipseMore.addEventListener('click', function (event) {
+        ellipseMore.addEventListener("click", function (event) {
           // call the custom more function
           that.defaults.onMoreClick.call(that, event);
           if (that.defaults.startpageNum + that.defaults.visiblePageCount > that.pageCount - 1 - that.defaults.visiblePageCount) {
@@ -375,10 +375,10 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_ellipseLessClickHandler",
     value: function _ellipseLessClickHandler(allItems, container) {
-      var ellipseLess = this._selectSingleElement('.pagination_wrapper .pagination_item.ellipse.less');
+      var ellipseLess = this._selectSingleElement(".pagination_wrapper .pagination_item.ellipse.less");
       if (!ellipseLess.classList.contains(this.defaults.disabledClass)) {
         var that = this;
-        ellipseLess.addEventListener('click', function (event) {
+        ellipseLess.addEventListener("click", function (event) {
           // call the custom less function
           that.defaults.onLessClick.call(that, event);
           if (that.defaults.startpageNum < that.defaults.visiblePageCount) {
@@ -404,7 +404,7 @@ var Paginate = /*#__PURE__*/function () {
       var _this = this;
       allItems.forEach(function (linkElement, linkEleInd) {
         var that = _this;
-        linkElement.addEventListener('click', function (event) {
+        linkElement.addEventListener("click", function (event) {
           // call the custom function
           that.defaults.onLinkClick.call(that, event);
           that._currentPage = linkEleInd;
@@ -417,10 +417,10 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_nextClickHander",
     value: function _nextClickHander(allItems, container) {
-      var nextLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_next');
+      var nextLink = this._selectSingleElement(".pagination_wrapper .pagination_item.paginaiton_next");
       if (!nextLink.classList.contains(this.defaults.disabledClass)) {
         var that = this;
-        nextLink.addEventListener('click', function (event) {
+        nextLink.addEventListener("click", function (event) {
           // call the custom next function
           that.defaults.onNextClick.call(that, event);
           if (that._currentPage < that.pageCount - 1 && that._currentPage >= 0) {
@@ -448,10 +448,10 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "_lastClickHandler",
     value: function _lastClickHandler(allItems, container) {
-      var lastLink = this._selectSingleElement('.pagination_wrapper .pagination_item.paginaiton_last');
+      var lastLink = this._selectSingleElement(".pagination_wrapper .pagination_item.paginaiton_last");
       if (!lastLink.classList.contains(this.defaults.disabledClass)) {
         var that = this;
-        lastLink.addEventListener('click', function (event) {
+        lastLink.addEventListener("click", function (event) {
           // call the custom last function
           that.defaults.onLastClick.call(that, event);
           that._currentPage = that.pageCount - 1;
@@ -476,18 +476,20 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     _classCallCheck(this, ProPaginate);
     _this2 = _super.call(this);
     _this2.defaults = Object.assign(_this2.defaults, {
-      mainContainerSelector: '#paginate',
+      mainContainerSelector: "#paginate",
       // id is recomended.
       data: [],
-      dataItemsArrayPath: '',
-      dataItemHtml: '',
+      dataItemsArrayPath: "",
+      dataItemHtml: "",
       showAlldataOnce: false,
       visibleDataonce: 5,
-      showMoreAreaLabel: 'Show More',
-      showMoreClass: 'show_more',
-      mainDataArrayEmptyErrorHtml: '',
-      singleDataItemArrayEmptyErrorHtml: '',
-      onShowMoreClick: function onShowMoreClick() {}
+      showMoreAreaLabel: "Show More",
+      showMoreClass: "show_more",
+      mainDataArrayEmptyErrorHtml: "",
+      singleDataItemArrayEmptyErrorHtml: "",
+      onShowMoreClick: function onShowMoreClick() {},
+      onDataUpdate: function onDataUpdate() {},
+      onUpdatedDataRander: function onUpdatedDataRander() {}
     });
     _this2._optionsHandler(options);
     _this2.setCurrentPage = _this2.defaults.startpageNum;
@@ -509,11 +511,11 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
           mainElement.innerHTML = pagination;
           // get all pagination element and hide them and show only instructed items
           if (this.pageCount > 1) {
-            var allPaginationLinkElements = this._selectArrayofElement('#pagination_container .data-item');
+            var allPaginationLinkElements = this._selectArrayofElement("#pagination_container .data-item");
             this._hideAllShowSpecificPaginationItems(allPaginationLinkElements);
             this._setActiveLink(allPaginationLinkElements);
             this._makePaginationBtnDisable();
-            var pageItemsContainer = this._selectSingleElement('.paginate_wrapper .items_container');
+            var pageItemsContainer = this._selectSingleElement(".paginate_wrapper .items_container");
             this._createRenderPageItems(pageItemsContainer, this._currentPage);
             // handle event of every link items
             var that = this;
@@ -527,7 +529,7 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
               this._ellipseLessClickHandler(allPaginationLinkElements, pageItemsContainer);
             }
           } else {
-            var _pageItemsContainer = this._selectSingleElement('.paginate_wrapper .items_container');
+            var _pageItemsContainer = this._selectSingleElement(".paginate_wrapper .items_container");
             this._createRenderPageItems(_pageItemsContainer, this._currentPage);
           }
         }, this);
@@ -537,7 +539,7 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     key: "_stringToTamplateGet",
     value: function _stringToTamplateGet(path, obj) {
       var fb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "${".concat(path, "}");
-      return path.split('.').reduce(function (res, key) {
+      return path.split(".").reduce(function (res, key) {
         return res[key] || fb;
       }, obj);
     }
@@ -553,7 +555,7 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
   }, {
     key: "_isDataValid",
     value: function _isDataValid() {
-      if (!Array.isArray(this.defaults.data)) throw Error('your data should be an array.');else return true;
+      if (!Array.isArray(this.defaults.data)) throw Error("your data should be an array.");else return true;
     }
   }, {
     key: "_createRenderPageItems",
@@ -562,7 +564,7 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
       var dataArr = ((_this$defaults$data$c = this.defaults.data[currentpage]) === null || _this$defaults$data$c === void 0 ? void 0 : _this$defaults$data$c[this.defaults.dataItemsArrayPath]) || [];
       if (dataArr.length > 0) {
         var renderToCount = this.defaults.showAlldataOnce ? dataArr.length : Math.min(this.defaults.visibleDataonce, dataArr.length);
-        var allElement = '';
+        var allElement = "";
         for (var i = 0; i < renderToCount; i++) {
           var htmlElement = this._stringToTamplateParser(this.defaults.dataItemHtml, dataArr[i]);
           allElement += htmlElement;
@@ -572,13 +574,13 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
         if (dataArr.length > this.defaults.visibleDataonce) {
           if (!this.isShowMoreSectionExist) {
             this._createRenderShowMore(container);
-            var showMoreSection = this._selectSingleElement('.paginate_wrapper .show_more_btn');
-            showMoreSection.addEventListener('click', this._showMoreClickEventCallback.bind(this));
+            var showMoreSection = this._selectSingleElement(".paginate_wrapper .show_more_btn");
+            showMoreSection.addEventListener("click", this._showMoreClickEventCallback.bind(this));
           }
         } else {
           if (this.isShowMoreSectionExist) {
-            var _showMoreSection = this._selectSingleElement('.paginate_wrapper .show_more_btn');
-            _showMoreSection.removeEventListener('click', this._showMoreClickEventCallback.bind(this));
+            var _showMoreSection = this._selectSingleElement(".paginate_wrapper .show_more_btn");
+            _showMoreSection.removeEventListener("click", this._showMoreClickEventCallback.bind(this));
             _showMoreSection.remove();
             this.isShowMoreSectionExist = false;
           }
@@ -591,7 +593,7 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     key: "_createRenderShowMore",
     value: function _createRenderShowMore(container) {
       var showMoreSection = "<div class=\"show_more_btn ".concat(this.defaults.showMoreClass, " hidden\"><span>").concat(this.defaults.showMoreAreaLabel, "</span></div>");
-      this.defaults.showAlldataOnce || container.insertAdjacentHTML('afterend', showMoreSection);
+      this.defaults.showAlldataOnce || container.insertAdjacentHTML("afterend", showMoreSection);
       this.isShowMoreSectionExist = true;
       this._showHideShowMore(container);
     }
@@ -599,18 +601,18 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     key: "_showHideShowMoreScrollEventCallback",
     value: function _showHideShowMoreScrollEventCallback(e) {
       if (this.isShowMoreSectionExist) {
-        var showMoreSection = this._selectSingleElement('.paginate_wrapper .show_more_btn');
-        if (e.target.classList.contains('column_view')) {
+        var showMoreSection = this._selectSingleElement(".paginate_wrapper .show_more_btn");
+        if (e.target.classList.contains("column_view")) {
           if (e.target.scrollHeight - 20 <= e.target.scrollTop + e.target.clientHeight) {
-            showMoreSection.classList.remove('hidden');
+            showMoreSection.classList.remove("hidden");
           } else {
-            showMoreSection.classList.add('hidden');
+            showMoreSection.classList.add("hidden");
           }
-        } else if (e.target.classList.contains('row_view')) {
+        } else if (e.target.classList.contains("row_view")) {
           if (e.target.scrollWidth - 20 <= e.target.scrollLeft + e.target.clientWidth) {
-            showMoreSection.classList.remove('hidden');
+            showMoreSection.classList.remove("hidden");
           } else {
-            showMoreSection.classList.add('hidden');
+            showMoreSection.classList.add("hidden");
           }
         }
       }
@@ -619,30 +621,30 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     key: "_showHideShowMore",
     value: function _showHideShowMore(container) {
       if (this._checkElementOverflows(container)) {
-        container.addEventListener('scroll', this._showHideShowMoreScrollEventCallback.bind(this));
+        container.addEventListener("scroll", this._showHideShowMoreScrollEventCallback.bind(this));
       } else {
         if (this.isShowMoreSectionExist) {
-          var showMoreSection = this._selectSingleElement('.paginate_wrapper .show_more_btn');
-          if (showMoreSection.classList.contains('hidden')) showMoreSection.classList.remove('hidden');
+          var showMoreSection = this._selectSingleElement(".paginate_wrapper .show_more_btn");
+          if (showMoreSection.classList.contains("hidden")) showMoreSection.classList.remove("hidden");
         }
       }
     }
   }, {
-    key: "_addMorePageItems",
-    value: function _addMorePageItems(itemCount) {
-      var pageItemsContainer = this._selectSingleElement('.paginate_wrapper .items_container');
-      var alreadyExistEleCount = pageItemsContainer.querySelectorAll('div.data_item').length;
+    key: "_showMorePageItems",
+    value: function _showMorePageItems(itemCount) {
+      var pageItemsContainer = this._selectSingleElement(".paginate_wrapper .items_container");
+      var alreadyExistEleCount = pageItemsContainer.querySelectorAll("div.data_item").length;
       var dataArr = this.defaults.data[this._currentPage][this.defaults.dataItemsArrayPath];
       var loopEnd = dataArr.length - alreadyExistEleCount < itemCount ? dataArr.length - 1 : alreadyExistEleCount - 1 + itemCount;
       for (var i = alreadyExistEleCount - 1; i < loopEnd; i++) {
         var newElements = this._stringToTamplateParser(this.defaults.dataItemHtml, dataArr[i]);
-        pageItemsContainer.insertAdjacentHTML('beforeend', newElements);
+        pageItemsContainer.insertAdjacentHTML("beforeend", newElements);
       }
-      if (pageItemsContainer.querySelectorAll('div.data_item').length >= dataArr.length && this.isShowMoreSectionExist) {
-        this._selectSingleElement('.paginate_wrapper .show_more_btn').remove();
+      if (pageItemsContainer.querySelectorAll("div.data_item").length >= dataArr.length && this.isShowMoreSectionExist) {
+        this._selectSingleElement(".paginate_wrapper .show_more_btn").remove();
         this.isShowMoreSectionExist = false;
       } else {
-        this._selectSingleElement('.paginate_wrapper .show_more_btn').classList.add('hidden');
+        this._selectSingleElement(".paginate_wrapper .show_more_btn").classList.add("hidden");
       }
       this._handlePageScrollandTouchScrollDependingOverflows(pageItemsContainer);
     }
@@ -650,10 +652,19 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     key: "_showMoreClickEventCallback",
     value: function _showMoreClickEventCallback(e) {
       if (this.defaults.visibleDataonce < 5 && this.defaults.visibleDataonce > 0) {
-        this._addMorePageItems(this.defaults.visibleDataonce);
+        this._showMorePageItems(this.defaults.visibleDataonce);
       } else if (this.defaults.visibleDataonce >= 5) {
-        this._addMorePageItems(Math.round(this.defaults.visibleDataonce / 2));
+        this._showMorePageItems(Math.round(this.defaults.visibleDataonce / 2));
       }
+    }
+  }, {
+    key: "updateData",
+    set: function set(updatedData) {
+      this.defaults.data = updatedData;
+      this.defaults.onDataUpdate.call(this);
+      this._selectSingleElement(".paginate_wrapper .items_container").innerHTML = "";
+      this._init();
+      this.defaults.onUpdatedDataRander.call(this);
     }
   }]);
   return ProPaginate;
