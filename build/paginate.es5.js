@@ -15,7 +15,7 @@ function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _ty
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /*
  * A open source pagination plugin using pure Javascript.
- * v1.1.1
+ * v1.1.2
  *
  * @copyright	Copyright (c) 2023 Robiul H.
  * @license	MIT License; see LICENSE.txt
@@ -50,7 +50,9 @@ var Paginate = /*#__PURE__*/function () {
       onPrevClick: function onPrevClick(event) {},
       onNextClick: function onNextClick(event) {},
       onMoreClick: function onMoreClick(event) {},
-      onLessClick: function onLessClick(event) {}
+      onLessClick: function onLessClick(event) {},
+      onCurrentPageChange: function onCurrentPageChange() {},
+      onPageRender: function onPageRender() {}
     };
     this._currentPage = this.defaults.startpageNum;
   }
@@ -62,7 +64,8 @@ var Paginate = /*#__PURE__*/function () {
   }, {
     key: "setCurrentPage",
     set: function set(ind) {
-      return this._currentPage = ind;
+      this._currentPage = ind;
+      this.defaults.onCurrentPageChange.call(this);
     }
   }, {
     key: "_optionsHandler",
@@ -304,7 +307,7 @@ var Paginate = /*#__PURE__*/function () {
         firstLink.addEventListener("click", function (event) {
           // call the custom first function
           that.defaults.onFirstClick.call(that, event);
-          that._currentPage = 0;
+          that.setCurrentPage = 0;
           if (that.defaults.startpageNum != 0) {
             that.defaults.startpageNum = 0;
             that._hideAllShowSpecificPaginationItems(allItems);
@@ -337,7 +340,7 @@ var Paginate = /*#__PURE__*/function () {
             if (that.defaults.wrapAround) {
               that.defaults.startpageNum = that.pageCount - that.defaults.visiblePageCount;
               that._hideAllShowSpecificPaginationItems(allItems);
-              that._currentPage = that.pageCount - 1;
+              that.setCurrentPage = that.pageCount - 1;
               that._createRenderPageItems(container, that._currentPage);
               that._setActiveLink(allItems);
               that._makePaginationBtnDisable();
@@ -407,7 +410,7 @@ var Paginate = /*#__PURE__*/function () {
         linkElement.addEventListener("click", function (event) {
           // call the custom function
           that.defaults.onLinkClick.call(that, event);
-          that._currentPage = linkEleInd;
+          that.setCurrentPage = linkEleInd;
           that._createRenderPageItems(container, that._currentPage);
           that._setActiveLink(allItems);
           that._makePaginationBtnDisable();
@@ -436,7 +439,7 @@ var Paginate = /*#__PURE__*/function () {
             if (that.defaults.wrapAround) {
               that.defaults.startpageNum = 0;
               that._hideAllShowSpecificPaginationItems(allItems);
-              that._currentPage = 0;
+              that.setCurrentPage = 0;
               that._createRenderPageItems(container, that._currentPage);
               that._setActiveLink(allItems);
               that._makePaginationBtnDisable();
@@ -454,7 +457,7 @@ var Paginate = /*#__PURE__*/function () {
         lastLink.addEventListener("click", function (event) {
           // call the custom last function
           that.defaults.onLastClick.call(that, event);
-          that._currentPage = that.pageCount - 1;
+          that.setCurrentPage = that.pageCount - 1;
           if (that.defaults.startpageNum != that.pageCount - that.defaults.visiblePageCount) {
             that.defaults.startpageNum = that.pageCount - that.defaults.visiblePageCount;
             that._hideAllShowSpecificPaginationItems(allItems);
@@ -492,7 +495,7 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
       onUpdatedDataRander: function onUpdatedDataRander() {}
     });
     _this2._optionsHandler(options);
-    _this2.setCurrentPage = _this2.defaults.startpageNum;
+    _this2._currentPage = _this2.defaults.startpageNum;
     _this2._init();
     return _this2;
   }
@@ -588,6 +591,7 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
       } else {
         container.innerHTML = this.defaults.singleDataItemArrayEmptyErrorHtml || "<div>No data available in this page.</div>";
       }
+      this.defaults.onPageRender.call(this);
     }
   }, {
     key: "_createRenderShowMore",

@@ -1,6 +1,6 @@
 {
   "name": "pro-paginate",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A open source pagination plugin using pure Javascript.",
   "main": "paginate.js",
   "directories": {

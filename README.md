@@ -11,9 +11,9 @@ To start using it straight away, place this in the head of your HTML code:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/pro-paginate@1.1.1/src/style/style.css"
+  href="https://cdn.jsdelivr.net/npm/pro-paginate@1.1.2/src/style/style.css"
 />
-<script src="https://cdn.jsdelivr.net/npm/pro-paginate@1.1.1/build/paginate.es5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pro-paginate@1.1.2/build/paginate.es5.js"></script>
 ```
 
 
@@ -420,6 +420,8 @@ document.onreadystatechange = function () {
 | `onLessClick`     | Function | false   | Callback to be run once the user click on the less link.          |
 | `onDataUpdate`     | Function | false   | Callback to be run once the data has been updated.          |
 | `onUpdatedDataRander`     | Function | false   | Callback to be run once the data has been randered.          |
+| `onCurrentPageChange`     | Function | false   | Callback to be run every time the Current Page index Change.          |
+| `onPageRender`     | Function | false   | Callback to be run every time the page render.          |
 
 ## Browser Support
 

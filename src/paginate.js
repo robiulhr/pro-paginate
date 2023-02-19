@@ -1,6 +1,6 @@
 /*
  * A open source pagination plugin using pure Javascript.
- * v1.1.1
+ * v1.1.2
  *
  * @copyright	Copyright (c) 2023 Robiul H.
  * @license	MIT License; see LICENSE.txt
@@ -35,6 +35,8 @@ class Paginate {
       onNextClick: function (event) {},
       onMoreClick: function (event) {},
       onLessClick: function (event) {},
+      onCurrentPageChange: function(){},
+      onPageRender:function(){}
     };
     this._currentPage = this.defaults.startpageNum;
   }
@@ -42,7 +44,8 @@ class Paginate {
     return this._currentPage;
   }
   set setCurrentPage(ind) {
-    return (this._currentPage = ind);
+    this._currentPage = ind;
+    this.defaults.onCurrentPageChange.call(this);
   }
   _optionsHandler(options) {
     // checking the provided options value
@@ -269,7 +272,7 @@ class Paginate {
       firstLink.addEventListener("click", function (event) {
         // call the custom first function
         that.defaults.onFirstClick.call(that, event);
-        that._currentPage = 0;
+        that.setCurrentPage = 0;
         if (that.defaults.startpageNum != 0) {
           that.defaults.startpageNum = 0;
           that._hideAllShowSpecificPaginationItems(allItems);
@@ -300,7 +303,7 @@ class Paginate {
           if (that.defaults.wrapAround) {
             that.defaults.startpageNum = that.pageCount - that.defaults.visiblePageCount;
             that._hideAllShowSpecificPaginationItems(allItems);
-            that._currentPage = that.pageCount - 1;
+            that.setCurrentPage = that.pageCount - 1;
             that._createRenderPageItems(container, that._currentPage);
             that._setActiveLink(allItems);
             that._makePaginationBtnDisable();
@@ -363,7 +366,7 @@ class Paginate {
       linkElement.addEventListener("click", function (event) {
         // call the custom function
         that.defaults.onLinkClick.call(that, event);
-        that._currentPage = linkEleInd;
+        that.setCurrentPage = linkEleInd;
         that._createRenderPageItems(container, that._currentPage);
         that._setActiveLink(allItems);
         that._makePaginationBtnDisable();
@@ -390,7 +393,7 @@ class Paginate {
           if (that.defaults.wrapAround) {
             that.defaults.startpageNum = 0;
             that._hideAllShowSpecificPaginationItems(allItems);
-            that._currentPage = 0;
+            that.setCurrentPage = 0;
             that._createRenderPageItems(container, that._currentPage);
             that._setActiveLink(allItems);
             that._makePaginationBtnDisable();
@@ -406,7 +409,7 @@ class Paginate {
       lastLink.addEventListener("click", function (event) {
         // call the custom last function
         that.defaults.onLastClick.call(that, event);
-        that._currentPage = that.pageCount - 1;
+        that.setCurrentPage = that.pageCount - 1;
         if (that.defaults.startpageNum != that.pageCount - that.defaults.visiblePageCount) {
           that.defaults.startpageNum = that.pageCount - that.defaults.visiblePageCount;
           that._hideAllShowSpecificPaginationItems(allItems);
@@ -437,7 +440,7 @@ class ProPaginate extends Paginate {
       onUpdatedDataRander : function(){}
     });
     this._optionsHandler(options);
-    this.setCurrentPage = this.defaults.startpageNum;
+    this._currentPage = this.defaults.startpageNum;
     this._init();
   }
   _init() {
@@ -518,6 +521,7 @@ class ProPaginate extends Paginate {
     } else {
       container.innerHTML = this.defaults.singleDataItemArrayEmptyErrorHtml || `<div>No data available in this page.</div>`;
     }
+    this.defaults.onPageRender.call(this);
   }
   _createRenderShowMore(container) {
     const showMoreSection = `<div class="show_more_btn ${this.defaults.showMoreClass} hidden"><span>${this.defaults.showMoreAreaLabel}</span></div>`;
