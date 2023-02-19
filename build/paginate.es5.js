@@ -15,7 +15,7 @@ function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _ty
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /*
  * A open source pagination plugin using pure Javascript.
- * v1.0.0
+ * v1.1.1
  *
  * @copyright	Copyright (c) 2023 Robiul H.
  * @license	MIT License; see LICENSE.txt
@@ -662,7 +662,7 @@ var ProPaginate = /*#__PURE__*/function (_Paginate) {
     set: function set(updatedData) {
       this.defaults.data = updatedData;
       this.defaults.onDataUpdate.call(this);
-      this._selectSingleElement(".paginate_wrapper .items_container").innerHTML = "";
+      this._selectSingleElement(this.defaults.mainContainerSelector).innerHTML = "";
       this._init();
       this.defaults.onUpdatedDataRander.call(this);
     }

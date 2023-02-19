@@ -11,9 +11,9 @@ To start using it straight away, place this in the head of your HTML code:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/pro-paginate@1.0.1/src/style/style.css"
+  href="https://cdn.jsdelivr.net/npm/pro-paginate@1.1.1/src/style/style.css"
 />
-<script src="https://cdn.jsdelivr.net/npm/pro-paginate@1.0.1/build/paginate.es5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pro-paginate@1.1.1/build/paginate.es5.js"></script>
 ```
 
 
